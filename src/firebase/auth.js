@@ -7,6 +7,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import app from './firebase';
+import { addUser } from './firestore';
 
 const auth = getAuth(app);
 
@@ -17,6 +18,9 @@ export const createUser = (user) => {
         displayName: user.name,
         phoneNumber: user.phoneNumber,
       })
+    })
+    .then(user => {
+      return addUser(user);
     });
 }
 
