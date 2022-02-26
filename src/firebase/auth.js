@@ -14,13 +14,8 @@ const auth = getAuth(app);
 export const createUser = (user) => {
   return createUserWithEmailAndPassword(auth, user.email, user.password)
     .then(userCredential => {
-      return updateProfile(userCredential.user, {
-        displayName: user.name,
-        phoneNumber: user.phoneNumber,
-      })
-    })
-    .then(user => {
-      return addUser(user);
+      updateUser({displayName: user.phoneNumber});
+      return addUser({uid: userCredential.user.uid, ...user});
     });
 }
 
@@ -37,7 +32,7 @@ export const getCurrentUser = () => {
 }
 
 export const updateUser = (user) => {
-  return updateProfile(auth, user);
+  return updateProfile(getCurrentUser(), user);
 }
 
 export const resetEmail = (email) => {

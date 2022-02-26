@@ -65,7 +65,8 @@ export const deleteEvent = (id) => {
 const usersRef = collection(db, 'users');
 
 export const addUser = (user) => {
-  return setDoc(usersRef, user.phoneNumber);
+  const userRef = getUserRef(user.phoneNumber);
+  return setDoc(userRef, user);
 }
 
 export const getUserRef = (phoneNumber) => {
