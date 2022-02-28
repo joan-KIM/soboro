@@ -16,14 +16,31 @@ import {
 } from 'firebase/firestore';
 import app from './firebase';
 
-const db = getFirestore(app);
-const eventsRef = collection(db, 'events');
+let db = getFirestore(app);
+let usersRef = collection(db, 'users');
+let eventsRef = collection(db, 'events');
+
+export const initDB = (firestore) => {
+  db = firestore;
+  usersRef = collection(db, 'users');
+  eventsRef = collection(db, 'events');
+}
 
 export const createEvent = (event) => {
   return addDoc(eventsRef, {
       ...event,
       isUpdating: false,
     });
+}
+
+export const getEvent = (id) => {
+  const ref = getEventRef(id);
+  return getEventData(ref);
+}
+
+export const getEvents = async () => {
+  const eventsSnapshot = await getDocs(eventsRef);
+  return eventsSnapshot.map(doc => doc.data());
 }
 
 export const getEventRef = (id) => {
@@ -62,7 +79,6 @@ export const deleteEvent = (id) => {
   return deleteDoc(eventRef);
 }
 
-const usersRef = collection(db, 'users');
 
 export const addUser = (user) => {
   const userRef = getUserRef(user.phoneNumber);
@@ -71,6 +87,19 @@ export const addUser = (user) => {
 
 export const getUserRef = (phoneNumber) => {
   return doc(usersRef, phoneNumber);
+}
+
+export const getUserData = async (ref) => {
+  const userSnap = await getDoc(ref);
+  if (userSnap.exists()) {
+    return userSnap.data();
+  }
+  return Promise.reject('User not found');
+}
+
+export const getUser = (phoneNumber) => {
+  const ref = getUserRef(phoneNumber);
+  return getUserData(ref);
 }
 
 export const getFollower = async (phoneNumber) => {

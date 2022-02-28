@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import { createUser, getCurrentUser, login } from './firebase/auth';
+import { getUser } from './firebase/firestore';
 
 function App() {
   const [email, setEmail] = useState('dmsdn960@gmail.com');
@@ -29,7 +30,17 @@ function App() {
         </label>
 
         <button onClick={() => {createUser({email, password, name, phoneNumber})}}>Sign Up</button>
-        <button onClick={() => {login('dmsdn960@gmail.com', '123456').then(() => console.log(getCurrentUser()))}}>Login</button>
+        <button onClick={() => {
+          login('dmsdn960@gmail.com', '123456')
+            .then(() => getCurrentUser())
+            .then((user) => {
+              console.log(user.displayName);
+              return getUser(user.displayName)
+            })
+            .then(user => {
+              console.log(user)
+            })
+        }}>Login</button>
       </header>
     </div>
   );
