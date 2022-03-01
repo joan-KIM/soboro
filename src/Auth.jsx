@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
-import { useRecoilValue } from 'recoil';
 import './App.css';
-import { createUser, getCurrentUser, login, logout } from './firebase/auth';
-import { getUser } from './firebase/firestore';
-import { getUserSelector } from './state';
+import { createUser, login, logout } from './firebase/auth';
 import { useAuth } from './useAuth';
 
 function Auth() {
