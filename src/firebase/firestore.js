@@ -82,7 +82,8 @@ export const deleteEvent = (id) => {
 
 export const addUser = (user) => {
   const userRef = getUserRef(user.phoneNumber);
-  return setDoc(userRef, user);
+  const {email, name, phoneNumber, uid} = user;
+  return setDoc(userRef, {uid, email, name, phoneNumber, followers: []});
 }
 
 export const getUserRef = (phoneNumber) => {
@@ -113,7 +114,8 @@ export const getFollower = async (phoneNumber) => {
 export const getFollowers = async (user) => {
   const userRef = getUserRef(user.phoneNumber);
   if (userRef.exists()) {
-    return userRef.data().followers;
+    const {followers} = await userRef.data();
+    return Promise.all(followers.map(follower => getFollower(follower)));
   }
   return Promise.reject('User not found');
 }

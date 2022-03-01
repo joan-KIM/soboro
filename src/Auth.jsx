@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
+import { useRecoilValue } from 'recoil';
 import './App.css';
 import { createUser, getCurrentUser, login, logout } from './firebase/auth';
 import { getUser } from './firebase/firestore';
+import { getUserSelector } from './state';
+import { useAuth } from './useAuth';
 
 function Auth() {
   const [email, setEmail] = useState('dmsdn960@gmail.com');
   const [password, setPassword] = useState('123456');
   const [name, setName] = useState('박은우');
   const [phoneNumber, setPhoneNumber] = useState('01012345678');
-  const [user, setUser] = useState({});
+  const user = useAuth();
 
   return (
     <div>
@@ -41,15 +44,8 @@ function Auth() {
       <button onClick={() => {createUser({email, password, name, phoneNumber})}}>Sign Up</button>
       <button onClick={() => {
         login(email, password)
-          .then(() => getCurrentUser())
-          .then((user) => {
-            return getUser(user.displayName)
-          })
-          .then(user => {
-            setUser(user);
-          })
       }}>Login</button>
-      <button onClick={() => logout().then(() => setUser({}))}>Logout</button>
+      <button onClick={() => logout()}>Logout</button>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import {
 import app from './firebase';
 import { addUser } from './firestore';
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export const createUser = (user) => {
   return createUserWithEmailAndPassword(auth, user.email, user.password)
