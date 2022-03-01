@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { useRecoilValue } from 'recoil';
 import './App.css';
-import { getCurrentUser } from './firebase/auth';
-import { getFollowers, getUser } from './firebase/firestore';
-import { getUserSelector } from './state';
+import { createEvent } from './firebase/firestore';
 import { useAuth } from './useAuth';
 
 function Store() {
   const user = useAuth();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState();
+  const [title, setTitle] = useState('여수 여행');
+  const [description, setDescription] = useState('즐거워');
+  const [date, setDate] = useState('2021-12-11');
+  const [members, setMembers] = useState(new Set());
 
   const [followers, setFollowers] = useState([]);
 
@@ -24,6 +22,12 @@ function Store() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    createEvent({
+      title,
+      description,
+      date,
+      members: Array.from(members),
+    })
   }
   return (
     <div>
@@ -41,13 +45,24 @@ function Store() {
         <label>
           Member:
           <ul>
-            {followers.map(follower => console.log(follower))}
+            {followers.map(follower => <li>
+              <input type="checkbox" onChange={checked => setMembers(prev => {
+                if (checked) {
+                  prev.add(follower.id)
+                  return new Set(prev);
+                } else {
+                  prev.delete(follower.id)
+                  return new Set(prev);
+                }})}>{follower.name}</input>
+            </li>)}
           </ul>
-
         </label>
-
         <button type="submit">Create</button>
       </form>
+
+      <ul>
+        
+      </ul>
     </div>
   );
 }
