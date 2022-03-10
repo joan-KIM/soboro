@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import './App.css';
-import { createUser, login, logout } from './firebase/auth';
-import { useAuth } from './useAuth';
+import { createUser, login, logout } from '../firebase/auth';
+import { useAuth } from '../hooks/useAuth';
 
 function Auth() {
   const [email, setEmail] = useState('dmsdn960@gmail.com');
@@ -13,14 +12,14 @@ function Auth() {
   return (
     <div>
       <h1>Current User</h1>
-      <dl>
+      {user && <dl>
         <dt>name</dt>
         <dd>{user.name}</dd>
         <dt>email</dt>
         <dd>{user.email}</dd>
         <dt>phoneNumber</dt>
         <dd>{user.phoneNumber}</dd>
-      </dl>
+      </dl>}
       <label>
         Email:
         <input value={email} onChange={e => setEmail(e.target.value)} />

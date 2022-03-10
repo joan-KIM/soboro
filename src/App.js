@@ -1,23 +1,21 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
-import {RecoilRoot} from 'recoil';
-import Auth from './Auth';
-import Store from './Store';
+import { QueryClient, QueryClientProvider } from "react-query";
+import Auth from './components/Auth';
+import Store from './components/Store';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <RecoilRoot>
+    <QueryClientProvider client={queryClient}>
       <div className="App">
         <header className="App-header">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Auth />
-          </Suspense>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Store />
-          </Suspense>
+          <Auth />
+          <Store />
         </header>
       </div>
-    </RecoilRoot>
+    </QueryClientProvider>
   );
 }
 
