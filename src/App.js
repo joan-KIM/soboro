@@ -4,29 +4,36 @@ import {RecoilRoot} from 'recoil';
 import Auth from './Auth';
 import Store from './Store';
 import { Route, Routes } from 'react-router-dom';
-import Timeline from './pages/Timeline';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import Filter from './pages/Filter';
-import Profile from './pages/Profile';
-import Event from './pages/Event';
-
-import CreateEvent from './pages/CreateEvent';
-import SearchFollower from './pages/SearchFollower';
+import TimelinePage from './pages/TimelinePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import FilterPage from './pages/FilterPage';
+import ProfilePage from './pages/ProfilePage';
+import EventPage from './pages/EventPage';
+import CreateEventPage from './pages/CreateEventPage';
+import SearchFollowerPage from './pages/SearchFollowerPage';
+import EditEventPage from './pages/EditEventPage';
+import EditProfilePage from './pages/EditProfilePage';
+import FollowersPage from './pages/FollowersPage';
 
 function App() {
   return (
       <RecoilRoot>
         <div className="App">
           <Routes>
-            <Route path="/" element={<Timeline />} />
-            <Route path="/account/login" element={<Login />} />
-            <Route path="/account/signup" element={<SignUp />} />            
-            <Route path="/filter" element={<Filter />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/follower/search" element={<SearchFollower />} />
-            <Route path="/event" element={<Event />} />
-            <Route path="/event/create" element={<CreateEvent />} />
+            <Route path="/" element={<TimelinePage />} />
+            <Route path="/account/login" element={<LoginPage />} />
+            <Route path="/account/signup" element={<SignUpPage />} />            
+            <Route path="/filter" element={<FilterPage />} />
+            <Route path="/profile" element={<ProfilePage />} >
+              <Route path="edit" element={<EditProfilePage /> } />
+            </Route>
+            <Route path="/follower/list" element={<FollowersPage /> } />
+            <Route path="/follower/search" element={<SearchFollowerPage />} />
+            <Route path="/event" element={<EventPage />}>
+              <Route path="edit" element={<EditEventPage /> } />
+            </Route>
+            <Route path="/event/create" element={<CreateEventPage />} />  
           </Routes>
           
           <header className="App-header">

@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
-export default function Timeline() {
+export default function TimelinePage() {
     return (
         <div>
             <h1>타임라인 페이지</h1>
