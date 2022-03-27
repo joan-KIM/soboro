@@ -25,14 +25,12 @@ function App() {
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />            
             <Route path="/filter" element={<FilterPage />} />
-            <Route path="/profile" element={<ProfilePage />} >
-              <Route path="edit" element={<EditProfilePage /> } />
-            </Route>
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/edit" element={<EditProfilePage /> } />
             <Route path="/follower/list" element={<FollowersPage /> } />
             <Route path="/follower/search" element={<SearchFollowerPage />} />
-            <Route path="/event" element={<EventPage />}>
-              <Route path="edit" element={<EditEventPage /> } />
-            </Route>
+            <Route path="/event" element={<EventPage />} />
+            <Route path="/event/edit" element={<EditEventPage /> } />
             <Route path="/event/create" element={<CreateEventPage />} />  
           </Routes>
           
