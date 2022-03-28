@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
-import { createEvent } from './firebase/firestore';
-import { useAuth } from './useAuth';
+import { createEvent } from '../firebase/firestore';
+import { useAuth } from '../hooks/useAuth';
 
 function Store() {
   const user = useAuth();
@@ -13,7 +12,7 @@ function Store() {
   const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
-    if (user.followers) {
+    if (user?.followers) {
       setFollowers(user.followers);
     } else {
       setFollowers([]);

@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
-import {RecoilRoot} from 'recoil';
-import Auth from './Auth';
-import Store from './Store';
+import { QueryClient, QueryClientProvider } from "react-query";
+import Auth from './components/Auth';
+import Store from './components/Store';
 import { Route, Routes } from 'react-router-dom';
 import TimelinePage from './pages/TimelinePage';
 import LoginPage from './pages/LoginPage';
@@ -16,9 +16,11 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FollowersPage from './pages/FollowersPage';
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-      <RecoilRoot>
+    <QueryClientProvider client={queryClient}>
         <div className="App">
           <Routes>
             <Route path="/" element={<TimelinePage />} />
@@ -35,15 +37,11 @@ function App() {
           </Routes>
           
           <header className="App-header">
-            <Suspense fallback={<div>Loading...</div>}>
               <Auth />
-            </Suspense>
-            <Suspense fallback={<div>Loading...</div>}>
               <Store />
-            </Suspense>
           </header>
         </div>
-      </RecoilRoot>
+    </QueryClientProvider>
   );
 }
 
