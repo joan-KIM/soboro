@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import App from "../App";
 
 describe('App Route Test', () => {
-  it('App으로 Render시 타임라인 페이지가 보인다.', () => {
+  it('App으로 Render시 타임라인 페이지가 보인다.', async () => {
     const history = createMemoryHistory();
 
     render(
@@ -14,10 +14,12 @@ describe('App Route Test', () => {
       </Router>
     );
 
-    expect(screen.getByText(/타임라인 페이지/)).toBeInTheDocument();
+    const title = await screen.findByText(/타임라인 페이지/);
+
+    expect(title).toBeInTheDocument();
   })
 
-  it('/로 접근 시 타임라인 페이지가 보인다.', () => {
+  it('/로 접근 시 타임라인 페이지가 보인다.', async () => {
     const history = createMemoryHistory();
 
     history.push('/');
@@ -28,10 +30,12 @@ describe('App Route Test', () => {
       </Router>
     );
 
-    expect(screen.getByText(/타임라인 페이지/)).toBeInTheDocument();
+    const title = await screen.findByText(/타임라인 페이지/);
+
+    expect(title).toBeInTheDocument();
   })
 
-  it('/account/login으로 접근 시 로그인 페이지가 보인다.', () => {
+  it('/account/login으로 접근 시 로그인 페이지가 보인다.', async () => {
     const history = createMemoryHistory();
 
     history.push('/account/login');
@@ -42,10 +46,12 @@ describe('App Route Test', () => {
       </Router>
     );
 
-    expect(screen.getByText(/로그인 페이지/)).toBeInTheDocument();
+    const title = await screen.findByText(/로그인 페이지/);
+
+    expect(title).toBeInTheDocument();
   })
 
-  it('/profile 으로 접근 시 마이 페이지가 보인다.', () => {
+  it('/profile 으로 접근 시 마이 페이지가 보인다.', async () => {
     const history = createMemoryHistory();
 
     history.push('/profile');
@@ -56,10 +62,12 @@ describe('App Route Test', () => {
       </Router>
     );
 
-    expect(screen.getByText(/마이페이지/, {selector: 'h1'})).toBeInTheDocument();
+    const title = await screen.findByText(/마이페이지/, {selector: 'h1'});
+
+    expect(title).toBeInTheDocument();
   })
 
-  it('/profile 에서 마이페이지 수정을 누르면 수정 페이지가 보인다.', () => {
+  it('/profile 에서 마이페이지 수정을 누르면 수정 페이지가 보인다.', async () => {
     const history = createMemoryHistory();
 
     history.push('/profile');
@@ -72,7 +80,9 @@ describe('App Route Test', () => {
 
     userEvent.click(screen.getByText(/마이페이지 수정/));
 
-    expect(screen.getByText(/마이페이지 수정/)).toBeInTheDocument();
+    const title = await screen.findByText(/마이페이지 수정/);
+
+    expect(title).toBeInTheDocument();
   })
 
 });

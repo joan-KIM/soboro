@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from "react-query";
-import Auth from './Auth';
-import Store from './Store';
+import Auth from './components/Auth';
+import Store from './components/Store';
 import { Route, Routes } from 'react-router-dom';
 import TimelinePage from './pages/TimelinePage';
 import LoginPage from './pages/LoginPage';
