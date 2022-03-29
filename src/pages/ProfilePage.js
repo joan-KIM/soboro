@@ -1,7 +1,13 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function ProfilePage() {
+    const user = useAuth();
+    if(!user){
+        return <Navigate to="/account/login" replace={true} />
+    }
+    
     return (
         <div>
             <h1>마이페이지</h1>
