@@ -15,6 +15,7 @@ import SearchFollowerPage from './pages/SearchFollowerPage';
 import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FollowersPage from './pages/FollowersPage';
+import RequiredAuth from './components/RequiredAuth';
 
 const queryClient = new QueryClient();
 
@@ -23,23 +24,63 @@ function App() {
     <QueryClientProvider client={queryClient}>
         <div className="App">
           <Routes>
-            <Route path="/" element={<TimelinePage />} />
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />            
-            <Route path="/filter" element={<FilterPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/edit" element={<EditProfilePage /> } />
-            <Route path="/follower/list" element={<FollowersPage /> } />
-            <Route path="/follower/search" element={<SearchFollowerPage />} />
-            <Route path="/event" element={<EventPage />} />
-            <Route path="/event/edit" element={<EditEventPage /> } />
-            <Route path="/event/create" element={<CreateEventPage />} />  
+            <Route path="/" element={
+              <RequiredAuth to="/account/login">
+                  <TimelinePage />
+                </RequiredAuth>
+              }
+            />
+            <Route path="/filter" element={
+              <RequiredAuth to="/account/login">
+                  <FilterPage />
+                </RequiredAuth>
+              }
+            />
+            <Route path="/profile" element={
+              <RequiredAuth to="/account/login">
+                  <ProfilePage />
+                </RequiredAuth>
+              }
+            />
+            <Route path="/profile/edit" element={
+              <RequiredAuth to="/account/login">
+                  <EditProfilePage /> 
+                </RequiredAuth>
+              }
+            />
+            <Route path="/follower/list" element={
+              <RequiredAuth to="/account/login">
+                  <FollowersPage /> 
+                </RequiredAuth>
+              }
+            />
+            <Route path="/follower/search" element={
+              <RequiredAuth to="/account/login">
+                  <SearchFollowerPage />
+                </RequiredAuth>
+              }
+            />
+            <Route path="/event" element={
+              <RequiredAuth to="/account/login">
+                  <EventPage />
+                </RequiredAuth>
+              }
+            />
+            <Route path="/event/edit" element={
+              <RequiredAuth to="/account/login">
+                  <EditEventPage /> 
+                </RequiredAuth>
+              }
+            />
+            <Route path="/event/create" element={
+              <RequiredAuth to="/account/login">
+                  <CreateEventPage />
+                </RequiredAuth>
+              }
+            />
           </Routes>
-          
-          <header className="App-header">
-              <Auth />
-              <Store />
-          </header>
         </div>
     </QueryClientProvider>
   );
