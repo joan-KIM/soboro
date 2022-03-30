@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { createEvent } from '../firebase/firestore';
 import { useAuth } from '../hooks/useAuth';
 import { useFriends } from '../hooks/useFriends';

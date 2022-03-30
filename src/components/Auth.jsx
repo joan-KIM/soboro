@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { createUser, login, logout, resetPassword } from '../firebase/auth';
+import { findUserByName } from '../firebase/firestore';
 import { useAuth } from '../hooks/useAuth';
 
 function Auth() {
@@ -8,6 +9,7 @@ function Auth() {
   const [name, setName] = useState('박은우');
   const [birthday, setBirthday] = useState('1996-12-18');
   const {user} = useAuth();
+  const [isSameName, setIsSameName] = useState(false);
 
   return (
     <div>
@@ -30,7 +32,14 @@ function Auth() {
       </label>
       <label>
         Name:
-        <input value={name} onChange={e => setName(e.target.value)} />
+        <input value={name} onChange={e => {
+          setName(e.target.value);
+          findUserByName(e.target.value)
+            .then(user => {
+              setIsSameName(!!user);
+            });
+        }} />
+      {isSameName && <p>중복된 이름 입니다.</p>}
       </label>
       <label>
         birthday:
