@@ -11,10 +11,18 @@ import { addUser } from './firestore';
 
 export const auth = getAuth(app);
 
+/**
+ * 회원가입시 유저 생성 함수
+ * @param {object} user 
+ * @param {string} user.email
+ * @param {string} user.password
+ * @param {string} user.name
+ * @param {string} user.birthday
+ * @returns 
+ */
 export const createUser = (user) => {
   return createUserWithEmailAndPassword(auth, user.email, user.password)
     .then(userCredential => {
-      updateUser({displayName: user.phoneNumber});
       return addUser({uid: userCredential.user.uid, ...user});
     });
 }
@@ -39,6 +47,6 @@ export const updateUser = (user) => {
   return updateProfile(getCurrentUser(), user);
 }
 
-export const resetEmail = (email) => {
+export const resetPassword = (email) => {
   return sendPasswordResetEmail(auth, email);
 }

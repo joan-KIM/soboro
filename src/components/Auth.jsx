@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import { createUser, login, logout } from '../firebase/auth';
+import { createUser, login, logout, resetPassword } from '../firebase/auth';
 import { useAuth } from '../hooks/useAuth';
 
 function Auth() {
   const [email, setEmail] = useState('dmsdn960@gmail.com');
   const [password, setPassword] = useState('123456');
   const [name, setName] = useState('박은우');
-  const [phoneNumber, setPhoneNumber] = useState('01012345678');
+  const [birthday, setBirthday] = useState('1996-12-18');
   const {user} = useAuth();
 
   return (
@@ -17,8 +17,8 @@ function Auth() {
         <dd>{user.name}</dd>
         <dt>email</dt>
         <dd>{user.email}</dd>
-        <dt>phoneNumber</dt>
-        <dd>{user.phoneNumber}</dd>
+        <dt>birthday</dt>
+        <dd>{user.birthday}</dd>
       </dl>}
       <label>
         Email:
@@ -33,15 +33,16 @@ function Auth() {
         <input value={name} onChange={e => setName(e.target.value)} />
       </label>
       <label>
-        phone:
-        <input value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+        birthday:
+        <input value={birthday} onChange={e => setBirthday(e.target.value)} />
       </label>
 
-      <button onClick={() => {createUser({email, password, name, phoneNumber})}}>Sign Up</button>
+      <button onClick={() => {createUser({email, password, name, birthday})}}>Sign Up</button>
       <button onClick={() => {
         login(email, password)
       }}>Login</button>
       <button onClick={() => logout()}>Logout</button>
+      <button onClick={() => resetPassword(email)}>Reset Password</button>
     </div>
   );
 }
