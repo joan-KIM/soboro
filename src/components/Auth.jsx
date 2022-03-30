@@ -7,7 +7,7 @@ function Auth() {
   const [password, setPassword] = useState('123456');
   const [name, setName] = useState('박은우');
   const [phoneNumber, setPhoneNumber] = useState('01012345678');
-  const user = useAuth();
+  const {user} = useAuth();
 
   return (
     <div>

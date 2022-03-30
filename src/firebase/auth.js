@@ -20,11 +20,15 @@ export const createUser = (user) => {
 }
 
 export const login = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password)
+    .then(response => {
+      sessionStorage.setItem('refresh_token', response._tokenResponse.refreshToken)
+    });
 }
 
 export const logout = () => {
-  return signOut(auth);
+  return signOut(auth)
+    .then(() => sessionStorage.removeItem('refresh_token'));
 }
 
 export const getCurrentUser = () => {

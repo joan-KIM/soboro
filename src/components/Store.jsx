@@ -3,7 +3,7 @@ import { createEvent } from '../firebase/firestore';
 import { useAuth } from '../hooks/useAuth';
 
 function Store() {
-  const user = useAuth();
+  const {user} = useAuth();
   const [title, setTitle] = useState('여수 여행');
   const [description, setDescription] = useState('즐거워');
   const [date, setDate] = useState('2021-12-11');
