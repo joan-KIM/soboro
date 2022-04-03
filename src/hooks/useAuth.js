@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) => {
   const [authInfo, setAuthInfo] = useState();
   const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('refresh_token'));
   const [error, setError] = useState();
-  const {data} = useQuery(['user', authInfo?.displayName], () => getUser(authInfo?.displayName), {
+  const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid), {
     enabled: !!authInfo
   });
 

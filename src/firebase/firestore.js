@@ -13,6 +13,7 @@ import {
   where,
   getDocs,
   orderBy,
+  runTransaction,
 } from 'firebase/firestore';
 import app from './firebase';
 
@@ -79,15 +80,14 @@ export const deleteEvent = (id) => {
   return deleteDoc(eventRef);
 }
 
-
 export const addUser = (user) => {
-  const userRef = getUserRef(user.phoneNumber);
-  const {email, name, phoneNumber, uid} = user;
-  return setDoc(userRef, {uid, email, name, phoneNumber, followers: []});
+  const {email, name, birthday, uid} = user;
+  const userRef = getUserRef(uid);
+  return setDoc(userRef, {uid, email, name, birthday, friend: {list: [], requested: [], requesting: []}});
 }
 
-export const getUserRef = (phoneNumber) => {
-  return doc(usersRef, phoneNumber);
+export const getUserRef = (uid) => {
+  return doc(usersRef, uid);
 }
 
 export const getUserData = async (ref) => {
@@ -98,49 +98,109 @@ export const getUserData = async (ref) => {
   return Promise.reject('User not found');
 }
 
-export const getUser = (phoneNumber) => {
-  const ref = getUserRef(phoneNumber);
+export const getUser = (uid) => {
+  const ref = getUserRef(uid);
   return getUserData(ref);
 }
 
-export const getFollower = async (phoneNumber) => {
-  const userRef = getUserRef(phoneNumber);
-  if (userRef.exists()) {
-    return userRef.data();
-  }
-  return Promise.reject('User not found');
+export const findUserByName = async (name) => {
+  const querySnapshot = await getDocs(query(usersRef, where('name', '==', name)));
+  let user = null;
+  querySnapshot.forEach(doc => {
+    user = doc.data();
+  });
+  return user;
 }
 
-export const getFollowers = async (user) => {
-  const userRef = getUserRef(user.phoneNumber);
-  if (userRef.exists()) {
-    const {followers} = await userRef.data();
-    return Promise.all(followers.map(follower => getFollower(follower)));
-  }
-  return Promise.reject('User not found');
+export const getFriends = async (user) => {
+  return Promise.all(user.friend.list.map(friend => getUser(friend.uid)));
 }
 
-export const follow = (user, phoneNumber) => {
-  const userRef = getUserRef(user.phoneNumber);
-  updateDoc(userRef, {
-    followers: arrayUnion(phoneNumber),
+// 친구 요청
+export const requestFriend = (user, uid) => {
+  runTransaction(db, async (transaction) => {
+    const userRef = getUserRef(user.uid);
+    const friendRef = getUserRef(uid);
+
+    transaction.updateDoc(userRef, {
+      'friend.requesting': arrayUnion(uid),
+    });
+    transaction.updateDoc(friendRef, {
+      'friend.requested': arrayUnion(user.uid),
+    });
   })
 }
 
-export const unFollow = (user, phoneNumber) => {
-  const userRef = getUserRef(user.phoneNumber);
-  updateDoc(userRef, {
-    followers: arrayRemove(phoneNumber),
-  })
+// 요청 온 친구 승인
+export const approveFriend = (user, uid) => {
+  runTransaction(db, async (transaction) => {
+    const userRef = getUserRef(user.uid);
+    const friendRef = getUserRef(uid);
+
+    transaction.updateDoc(userRef, {
+      'friend.list': arrayUnion(uid),
+      'friend.requested': arrayRemove(uid),
+    })
+    transaction.updateDoc(friendRef, {
+      'friend.list': arrayUnion(user.uid),
+      'friend.requesting': arrayRemove(user.uid),
+    })
+  });
 }
 
+// 내가 한 친구 요청 취소
+export const cancelRequestFriend = (user, uid) => {
+  runTransaction(db, async (transaction) => {
+    const userRef = getUserRef(user.uid);
+    const friendRef = getUserRef(uid);
+
+    transaction.updateDoc(userRef, {
+      'friend.requesting': arrayRemove(uid),
+    })
+    transaction.updateDoc(friendRef, {
+      'friend.requested': arrayRemove(user.uid),
+    })
+  });
+}
+
+// 요청 온 친구 거절
+export const rejectFriend = (user, uid) => {
+  runTransaction(db, async (transaction) => {
+    const userRef = getUserRef(user.uid);
+    const friendRef = getUserRef(uid);
+
+    transaction.updateDoc(userRef, {
+      'friend.requested': arrayRemove(uid),
+    })
+    transaction.updateDoc(friendRef, {
+      'friend.requesting': arrayRemove(user.uid),
+    })
+  });
+}
+
+// 친구 삭제
+export const removeFriend = (user, uid) => {
+  runTransaction(db, async (transaction) => {
+    const userRef = getUserRef(user.uid);
+    const friendRef = getUserRef(uid);
+
+    transaction.updateDoc(userRef, {
+      'friend.list': arrayRemove(uid),
+    })
+    transaction.updateDoc(friendRef, {
+      'friend.list': arrayRemove(user.uid),
+    })
+  });
+}
+
+// TODO: 복잡한 필터 없이 전체 타임라인 가져오기로 변경
 export const getTimeline = async (user, options) => {
   // 1. current user로 부터 멤버를 가져온다.
   const followers = [
     options.isIncludingMe && user.uid,
     ...(options.members ?
       options.members :
-      getFollowers(user).map(({uid}) => uid)),
+      getFriends(user).map(({uid}) => uid)),
   ];
   // 2. 멤버가 모두 포함된 이벤트를 가져온다.
   // 해당 문서에 속한 멤버들이 전부 followers에 속하는지 확인.
