@@ -1,12 +1,13 @@
 import {onAuthStateChanged} from 'firebase/auth';
-import {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {useQuery} from 'react-query';
 import {auth} from '../firebase/auth';
 import {getUser} from '../firebase/firestore';
 
 export const AuthContext = createContext();
 
-export function useAuth () {
+export function useAuth() {
   return useContext(AuthContext);
 }
 
@@ -15,7 +16,7 @@ export const AuthProvider = ({children}) => {
   const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('refresh_token'));
   const [error, setError] = useState();
   const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid), {
-    enabled: !!authInfo
+    enabled: !!authInfo,
   });
 
   useEffect(() => {
@@ -25,9 +26,13 @@ export const AuthProvider = ({children}) => {
 
   useEffect(() => {
     setIsAuth(!!sessionStorage.getItem('refresh_token'));
-  }, [authInfo])
+  }, [authInfo]);
 
   return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth}}>
     {children}
-  </AuthContext.Provider>
-}
+  </AuthContext.Provider>;
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node,
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from 'react-router-dom';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {Route, Routes} from 'react-router-dom';
 import TimelinePage from './pages/TimelinePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
@@ -14,7 +14,7 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FollowersPage from './pages/FollowersPage';
 import RequiredAuth from './components/RequiredAuth';
-import { AuthProvider } from './hooks/useAuth';
+import {AuthProvider} from './hooks/useAuth';
 
 const queryClient = new QueryClient();
 
@@ -25,7 +25,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/account/login" element={<LoginPage />} />
-            <Route path="/account/signup" element={<SignUpPage />} />            
+            <Route path="/account/signup" element={<SignUpPage />} />
             <Route path="/" element={
               <RequiredAuth to="/account/login">
                 <TimelinePage />
@@ -43,12 +43,12 @@ function App() {
             />
             <Route path="/profile/edit" element={
               <RequiredAuth to="/account/login">
-                <EditProfilePage /> 
+                <EditProfilePage />
               </RequiredAuth>}
             />
             <Route path="/follower/list" element={
               <RequiredAuth to="/account/login">
-                <FollowersPage /> 
+                <FollowersPage />
               </RequiredAuth>}
             />
             <Route path="/follower/search" element={
@@ -63,7 +63,7 @@ function App() {
             />
             <Route path="/event/edit" element={
               <RequiredAuth to="/account/login">
-                <EditEventPage /> 
+                <EditEventPage />
               </RequiredAuth>}
             />
             <Route path="/event/create" element={
