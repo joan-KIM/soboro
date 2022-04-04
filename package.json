@@ -56,8 +56,8 @@
     "lint-staged": "^12.3.7"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "npm run lint",
+    "src/**/*.{js,jsx}": [
+      "npm run lint:fix",
       "git add"
     ]
   },
