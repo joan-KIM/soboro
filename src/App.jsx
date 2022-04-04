@@ -14,7 +14,7 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
-import { AuthProvider } from './hooks/useAuth';
+import {AuthProvider} from './hooks/useAuth';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePhotoPage from './pages/ProfilePhotoPage';
 
@@ -55,7 +55,7 @@ function App() {
             />
             <Route path="/friends/list" element={
               <RequiredAuth to="/account/login">
-                <FriendsPage /> 
+                <FriendsPage />
               </RequiredAuth>}
             />
             <Route path="/friends/search" element={
