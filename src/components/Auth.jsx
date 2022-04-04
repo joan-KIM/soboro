@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { createUser, login, logout, resetPassword } from '../firebase/auth';
-import { findUserByName } from '../firebase/firestore';
-import { useAuth } from '../hooks/useAuth';
+import {createUser, login, logout, resetPassword} from '../firebase/auth';
+import {findUserByName} from '../firebase/firestore';
+import {useAuth} from '../hooks/useAuth';
 
 function Auth() {
   const [email, setEmail] = useState('dmsdn960@gmail.com');
@@ -24,31 +24,33 @@ function Auth() {
       </dl>}
       <label>
         Email:
-        <input value={email} onChange={e => setEmail(e.target.value)} />
+        <input value={email} onChange={(e) => setEmail(e.target.value)} />
       </label>
       <label>
         Password:
-        <input value={password} onChange={e => setPassword(e.target.value)} />
+        <input value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <label>
         Name:
-        <input value={name} onChange={e => {
+        <input value={name} onChange={(e) => {
           setName(e.target.value);
           findUserByName(e.target.value)
-            .then(user => {
-              setIsSameName(!!user);
-            });
+              .then((user) => {
+                setIsSameName(!!user);
+              });
         }} />
-      {isSameName && <p>중복된 이름 입니다.</p>}
+        {isSameName && <p>중복된 이름 입니다.</p>}
       </label>
       <label>
         birthday:
-        <input value={birthday} onChange={e => setBirthday(e.target.value)} />
+        <input value={birthday} onChange={(e) => setBirthday(e.target.value)} />
       </label>
 
-      <button onClick={() => {createUser({email, password, name, birthday})}}>Sign Up</button>
       <button onClick={() => {
-        login(email, password)
+        createUser({email, password, name, birthday});
+      }}>Sign Up</button>
+      <button onClick={() => {
+        login(email, password);
       }}>Login</button>
       <button onClick={() => logout()}>Logout</button>
       <button onClick={() => resetPassword(email)}>Reset Password</button>

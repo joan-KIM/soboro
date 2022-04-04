@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from 'react-router-dom';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {Route, Routes} from 'react-router-dom';
 import TimelinePage from './pages/TimelinePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
@@ -27,7 +27,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/account/login" element={<LoginPage />} />
-            <Route path="/account/signup" element={<SignUpPage />} />            
+            <Route path="/account/signup" element={<SignUpPage />} />
             <Route path="/" element={
               <RequiredAuth to="/account/login">
                 <TimelinePage />
@@ -50,7 +50,7 @@ function App() {
             />
             <Route path="/profile/edit" element={
               <RequiredAuth to="/account/login">
-                <EditProfilePage /> 
+                <EditProfilePage />
               </RequiredAuth>}
             />
             <Route path="/friends/list" element={
@@ -70,7 +70,7 @@ function App() {
             />
             <Route path="/event/edit" element={
               <RequiredAuth to="/account/login">
-                <EditEventPage /> 
+                <EditEventPage />
               </RequiredAuth>}
             />
             <Route path="/event/create" element={

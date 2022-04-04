@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { createEvent } from '../firebase/firestore';
-import { useAuth } from '../hooks/useAuth';
-import { useFriends } from '../hooks/useFriends';
+import {createEvent} from '../firebase/firestore';
+import {useAuth} from '../hooks/useAuth';
+import {useFriends} from '../hooks/useFriends';
 
 function Store() {
   const {user} = useAuth();
@@ -19,33 +19,34 @@ function Store() {
       description,
       date,
       members: Array.from(members),
-    })
-  }
+    });
+  };
   return (
     <div>
       <h2>Create Event</h2>
       <form onSubmit={onSubmit}>
         <label>
-          Title: <input value={title} onChange={e => setTitle(e.target.value)} />
+          Title: <input value={title} onChange={(e) => setTitle(e.target.value)} />
         </label>
         <label>
-          Description: <input value={description} onChange={e => setDescription(e.target.value)} />
+          Description: <input value={description} onChange={(e) => setDescription(e.target.value)} />
         </label>
         <label>
-          Date: <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+          Date: <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
         </label>
         <label>
           Member:
           <ul>
-            {friends.map(friend => <li>
-              <input type="checkbox" onChange={checked => setMembers(prev => {
+            {friends.map((friend) => <li key={friend.uid}>
+              <input type="checkbox" onChange={(checked) => setMembers((prev) => {
                 if (checked) {
-                  prev.add(friend.uid)
+                  prev.add(friend.uid);
                   return new Set(prev);
                 } else {
-                  prev.delete(friend.uid)
+                  prev.delete(friend.uid);
                   return new Set(prev);
-                }})}>{friend.name}</input>
+                }
+              })}>{friend.name}</input>
             </li>)}
           </ul>
         </label>
@@ -53,7 +54,7 @@ function Store() {
       </form>
 
       <ul>
-        
+
       </ul>
     </div>
   );
