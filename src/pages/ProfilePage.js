@@ -12,7 +12,7 @@ export default function ProfilePage() {
                     <Link to="/profile/edit">마이페이지 수정</Link>
                 </li>
                 <li>
-                    <Link to="/follower/list">팔로우 목록</Link>
+                    <Link to="/friends/list">팔로우 목록</Link>
                 </li>
             </ul>
         </div>

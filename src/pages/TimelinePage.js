@@ -7,10 +7,10 @@ export default function TimelinePage() {
             <h1>타임라인 페이지</h1>
             <ul>
                 <li>
-                    <Link to="/filter">이벤트 검색하기</Link>
+                    <Link to="/search">이벤트 검색하기</Link>
                 </li>  
                 <li>
-                    <Link to="/follower/search">팔로우 추가</Link>
+                    <Link to="/friends/search">팔로우 추가</Link>
                 </li>
                 <li>
                     <Link to="/profile">마이페이지</Link>
