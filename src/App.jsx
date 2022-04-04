@@ -5,16 +5,18 @@ import {Route, Routes} from 'react-router-dom';
 import TimelinePage from './pages/TimelinePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import FilterPage from './pages/FilterPage';
+import SearchEventPage from './pages/SearchEventPage';
 import ProfilePage from './pages/ProfilePage';
 import EventPage from './pages/EventPage';
 import CreateEventPage from './pages/CreateEventPage';
-import SearchFollowerPage from './pages/SearchFollowerPage';
+import SearchFriendsPage from './pages/SearchFriendsPage';
 import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
-import FollowersPage from './pages/FollowersPage';
+import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
 import {AuthProvider} from './hooks/useAuth';
+import NotificationsPage from './pages/NotificationsPage';
+import ProfilePhotoPage from './pages/ProfilePhotoPage';
 
 const queryClient = new QueryClient();
 
@@ -31,9 +33,14 @@ function App() {
                 <TimelinePage />
               </RequiredAuth>}
             />
-            <Route path="/filter" element={
+            <Route path="/account/photo" element={
               <RequiredAuth to="/account/login">
-                <FilterPage />
+                <ProfilePhotoPage />
+              </RequiredAuth>}
+            />
+            <Route path="/search" element={
+              <RequiredAuth to="/account/login">
+                <SearchEventPage />
               </RequiredAuth>}
             />
             <Route path="/profile" element={
@@ -46,14 +53,14 @@ function App() {
                 <EditProfilePage />
               </RequiredAuth>}
             />
-            <Route path="/follower/list" element={
+            <Route path="/friends/list" element={
               <RequiredAuth to="/account/login">
-                <FollowersPage />
+                <FriendsPage />
               </RequiredAuth>}
             />
-            <Route path="/follower/search" element={
+            <Route path="/friends/search" element={
               <RequiredAuth to="/account/login">
-                <SearchFollowerPage />
+                <SearchFriendsPage />
               </RequiredAuth>}
             />
             <Route path="/event" element={
@@ -69,6 +76,11 @@ function App() {
             <Route path="/event/create" element={
               <RequiredAuth to="/account/login">
                 <CreateEventPage />
+              </RequiredAuth>}
+            />
+            <Route path="/notifications" element={
+              <RequiredAuth to="/account/login">
+                <NotificationsPage />
               </RequiredAuth>}
             />
           </Routes>
