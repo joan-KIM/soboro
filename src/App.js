@@ -15,6 +15,8 @@ import EditProfilePage from './pages/EditProfilePage';
 import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
 import { AuthProvider } from './hooks/useAuth';
+import NotificationsPage from './pages/NotificationsPage';
+import ProfilePhotoPage from './pages/ProfilePhotoPage';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +31,11 @@ function App() {
             <Route path="/" element={
               <RequiredAuth to="/account/login">
                 <TimelinePage />
+              </RequiredAuth>}
+            />
+            <Route path="/account/photo" element={
+              <RequiredAuth to="/account/login">
+                <ProfilePhotoPage />
               </RequiredAuth>}
             />
             <Route path="/search" element={
@@ -69,6 +76,11 @@ function App() {
             <Route path="/event/create" element={
               <RequiredAuth to="/account/login">
                 <CreateEventPage />
+              </RequiredAuth>}
+            />
+            <Route path="/notifications" element={
+              <RequiredAuth to="/account/login">
+                <NotificationsPage />
               </RequiredAuth>}
             />
           </Routes>

@@ -21,6 +21,9 @@ export default function TimelinePage() {
                 <li>
                     <Link to="/event">이벤트 상세</Link>
                 </li>
+                <li>
+                    <Link to="/notifications">알림 페이지</Link>
+                </li>
             </ul>
         </div>
     )
