@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TiDelete} from 'react-icons/ti';
 import styled from 'styled-components';
 
@@ -26,6 +26,10 @@ font-size: 17px;
 color: #BEBFBF;
 }
 
+input::placeholder{
+color: #BEBFBF;
+}
+
 svg{
 color: #969696;
 font-size: 18px;
@@ -36,12 +40,27 @@ margin-right: 0;
 `;
 
 export default function SignUpInput() {
+  const [text, setText] = useState('');
+
+  function changeHandler(text) {
+    setText(text);
+  }
+
+  function clickHandler(e) {
+    setText('');
+  }
+
   return (
     <InputContainer>
       <label>사용자 이름</label>
       <InputGroup>
-        <input placeholder='영문 사용자 이름 입력' />
-        <TiDelete />
+        <input
+          type='text'
+          placeholder='영문 사용자 이름 입력'
+          value={text}
+          onChange={(e) => changeHandler(e.target.value)}
+        />
+        <TiDelete onClick={clickHandler} />
       </InputGroup>
     </InputContainer>
   );
