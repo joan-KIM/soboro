@@ -6,11 +6,17 @@ const InputContainer = styled.div`
 background: #FAFAFA;
 border-radius: 8px;
 padding: 10px 13px;
+box-sizing: border-box;
 
 label{
 font-size: 10px;
 color: #676C76;
 display: block;
+}
+
+&:focus-within{
+  border: 1px solid #000000;
+  background: #FFFFFF;
 }
 `;
 
