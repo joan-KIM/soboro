@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TiDelete} from 'react-icons/ti';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const InputContainer = styled.div`
 background: #FAFAFA;
@@ -24,17 +25,6 @@ const InputGroup = styled.div`
 padding: 10px 0 6px 0;
 display: flex;
 
-input{
-outline: none;
-border: none;
-background: none;
-font-size: 17px;
-color: #BEBFBF;
-}
-
-input::placeholder{
-color: #BEBFBF;
-}
 
 svg{
 color: #969696;
@@ -45,29 +35,44 @@ margin-right: 0;
 }
 `;
 
-export default function SignUpInput() {
-  const [text, setText] = useState('');
-
-  function changeHandler(text) {
-    setText(text);
+const Input = styled.input`
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 17px;
+  color: #BEBFBF;
+  flex: 1;
+  
+  &::placeholder{
+    color: #BEBFBF;
   }
+`;
 
-  function clickHandler(e) {
-    setText('');
-  }
-
+export default function SignUpInput({name, label, register, placeholder, reset, password, required, validate}) {
   return (
     <InputContainer>
-      <label>사용자 이름</label>
-      <InputGroup>
-        <input
-          type='text'
-          placeholder='영문 사용자 이름 입력'
-          value={text}
-          onChange={(e) => changeHandler(e.target.value)}
-        />
-        <TiDelete onClick={clickHandler} />
-      </InputGroup>
+      <label>
+        {label}
+        <InputGroup>
+          <Input
+            type={password ? 'password' : 'text'}
+            placeholder={placeholder}
+            {...register(name, {required, validate})}
+          />
+          <TiDelete onClick={() => reset({[name]: ''})} />
+        </InputGroup>
+      </label>
     </InputContainer>
   );
 }
+
+SignUpInput.propTypes = {
+  required: PropTypes.bool,
+  password: PropTypes.bool,
+  validate: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  reset: PropTypes.func.isRequired,
+};
