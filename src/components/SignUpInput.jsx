@@ -74,4 +74,3 @@ SignUpInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   reset: PropTypes.func.isRequired,
 };
-
