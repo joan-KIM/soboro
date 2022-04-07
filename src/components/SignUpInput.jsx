@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const InputContainer = styled.div`
-  background: #FAFAFA;
+  background: ${(props) => props.error ?
+    '#FCEFEE' :
+    (props.confirm ?
+      '#EEFFF5' :
+      '#FAFAFA'
+    )};
   border-radius: 8px;
   padding: 10px 13px;
 
@@ -51,6 +56,7 @@ export default function SignUpInput({
   label,
   reset,
   error,
+  isDirty,
   register,
   password,
   required,
@@ -59,7 +65,7 @@ export default function SignUpInput({
 }) {
   return (
     <>
-      <InputContainer >
+      <InputContainer error={!!error} confirm={isDirty && !error} >
         <Label>
           {label}
           <InputGroup>
@@ -82,6 +88,7 @@ SignUpInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   reset: PropTypes.func.isRequired,
+  isDirty: PropTypes.bool,
   register: PropTypes.func.isRequired,
   required: PropTypes.bool,
   password: PropTypes.bool,

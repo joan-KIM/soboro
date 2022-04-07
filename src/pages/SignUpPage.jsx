@@ -10,7 +10,7 @@ const Page = styled.div`
 `;
 
 export default function SignUpPage() {
-  const {register, handleSubmit, reset, formState: {errors}} = useForm({mode: 'onBlur'});
+  const {register, handleSubmit, reset, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
 
   const onSubmit = (data) => {
     console.log(data);
@@ -31,6 +31,7 @@ export default function SignUpPage() {
           validate={{
             minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
           }}
+          isDirty={dirtyFields.username}
           error={errors.username}
         />
         <SignUpInput
@@ -44,6 +45,7 @@ export default function SignUpPage() {
           validate={{
             minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
           }}
+          isDirty={dirtyFields.password}
           error={errors.password}
         />
         <input type="submit" value="확인" />
