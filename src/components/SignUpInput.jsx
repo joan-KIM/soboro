@@ -1,73 +1,77 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TiDelete} from 'react-icons/ti';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const InputContainer = styled.div`
-background: #FAFAFA;
-border-radius: 8px;
-padding: 10px 13px;
-box-sizing: border-box;
+  background: #FAFAFA;
+  border-radius: 8px;
+  padding: 10px 13px;
 
-label{
-font-size: 10px;
-color: #676C76;
-display: block;
-}
+  &:focus-within{
+    border: 1px solid #000000;
+    background: #FFFFFF;
+  }
+`;
 
-&:focus-within{
-  border: 1px solid #000000;
-  background: #FFFFFF;
-}
+const Label = styled.label`
+  font-size: 10px;
+  color: #676C76;
+  display: block;
 `;
 
 const InputGroup = styled.div`
-padding: 10px 0 6px 0;
-display: flex;
+  padding: 10px 0 6px 0;
+  display: flex;
 
-input{
-outline: none;
-border: none;
-background: none;
-font-size: 17px;
-color: #BEBFBF;
-}
-
-input::placeholder{
-color: #BEBFBF;
-}
-
-svg{
-color: #969696;
-font-size: 18px;
-display: block;
-margin: auto;
-margin-right: 0;
-}
+  svg{
+  color: #969696;
+  font-size: 18px;
+  display: block;
+  margin: auto;
+  margin-right: 0;
+  }
 `;
 
-export default function SignUpInput() {
-  const [text, setText] = useState('');
-
-  function changeHandler(text) {
-    setText(text);
+const Input = styled.input`
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 17px;
+  color: #000000;
+  flex: 1;
+  
+  &::placeholder{
+    color: #BEBFBF;
   }
+`;
 
-  function clickHandler(e) {
-    setText('');
-  }
-
+export default function SignUpInput({name, label, register, placeholder, reset, password, required, validate}) {
   return (
-    <InputContainer>
-      <label>사용자 이름</label>
-      <InputGroup>
-        <input
-          type='text'
-          placeholder='영문 사용자 이름 입력'
-          value={text}
-          onChange={(e) => changeHandler(e.target.value)}
-        />
-        <TiDelete onClick={clickHandler} />
-      </InputGroup>
+    <InputContainer >
+      <Label>
+        {label}
+        <InputGroup>
+          <Input
+            type={password ? 'password' : 'text'}
+            placeholder={placeholder}
+            {...register(name, {required, ...validate})}
+          />
+          <TiDelete onClick={() => reset({[name]: ''})} />
+        </InputGroup>
+      </Label>
     </InputContainer>
   );
 }
+
+SignUpInput.propTypes = {
+  required: PropTypes.bool,
+  password: PropTypes.bool,
+  validate: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  reset: PropTypes.func.isRequired,
+};
+
