@@ -41,7 +41,7 @@ const Label = styled.label`
 `;
 
 const InputGroup = styled.div`
-  padding: 10px 0 6px 0;
+  padding: 10px 0 6px;
   display: flex;
 
   svg{
@@ -86,7 +86,7 @@ const Input = styled.input`
 const Message = styled.p`
   color: #EC625C;
   font-size: 11px;
-  margin: 0;
+  margin: 4px 6px;
 `;
 
 export default function SignUpInput({
