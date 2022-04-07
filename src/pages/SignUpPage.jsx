@@ -10,7 +10,7 @@ const Page = styled.div`
 `;
 
 export default function SignUpPage() {
-  const {register, handleSubmit, reset, formState: {errors}} = useForm();
+  const {register, handleSubmit, reset, formState: {errors}} = useForm({mode: 'onBlur'});
 
   const onSubmit = (data) => {
     console.log(data);
@@ -22,27 +22,29 @@ export default function SignUpPage() {
       <Link to="/account/login">뒤로가기</Link>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SignUpInput
+          required
+          reset={reset}
           name="username"
           label="사용자 이름"
           register={register}
           placeholder="영문 사용자 이름 입력"
-          reset={reset}
-          required={true}
           validate={{
-            minLength: {
-              value: 6,
-              message: '에러 메세지 테스트',
-            },
+            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
           }}
+          error={errors.username}
         />
-        {errors.username && <span>{errors.username.message}</span>}
         <SignUpInput
           password
+          required
           name="password"
           label="비밀번호"
           register={register}
           placeholder="비밀번호 입력"
           reset={reset}
+          validate={{
+            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+          }}
+          error={errors.password}
         />
         <input type="submit" value="확인" />
       </form>

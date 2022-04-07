@@ -46,31 +46,45 @@ const Input = styled.input`
   }
 `;
 
-export default function SignUpInput({name, label, register, placeholder, reset, password, required, validate}) {
+export default function SignUpInput({
+  name,
+  label,
+  reset,
+  error,
+  register,
+  password,
+  required,
+  validate,
+  placeholder,
+}) {
   return (
-    <InputContainer >
-      <Label>
-        {label}
-        <InputGroup>
-          <Input
-            type={password ? 'password' : 'text'}
-            placeholder={placeholder}
-            {...register(name, {required, ...validate})}
-          />
-          <TiDelete onClick={() => reset({[name]: ''})} />
-        </InputGroup>
-      </Label>
-    </InputContainer>
+    <>
+      <InputContainer >
+        <Label>
+          {label}
+          <InputGroup>
+            <Input
+              type={password ? 'password' : 'text'}
+              placeholder={placeholder}
+              {...register(name, {required, validate})}
+            />
+            <TiDelete onClick={() => reset({[name]: ''})} />
+          </InputGroup>
+        </Label>
+      </InputContainer>
+      {error && <p>{error.type === 'required' ? '필수 입력항목 입니다' : error.message}</p>}
+    </>
   );
 }
 
 SignUpInput.propTypes = {
+  error: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  reset: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
   required: PropTypes.bool,
   password: PropTypes.bool,
   validate: PropTypes.object,
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  register: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  reset: PropTypes.func.isRequired,
 };
