@@ -12,17 +12,32 @@ const InputContainer = styled.div`
     )};
   border-radius: 8px;
   padding: 10px 13px;
+  border: 1px solid ${(props) => props.error ?
+    '#EC625C' :
+    (props.confirm ?
+      '#27AE60' :
+      'none'
+      )};
 
   &:focus-within{
     border: 1px solid #000000;
-    background: #FFFFFF;
+    background: #FAFAFA;
   }
 `;
 
 const Label = styled.label`
-  font-size: 10px;
-  color: #676C76;
   display: block;
+  font-size: 10px;
+  color: ${(props) => props.error ?
+    '#EC625C' :
+    (props.confirm ?
+      '#27AE60' :
+      '#676C76'
+    )};
+
+  &:focus-within{
+    color: #676C76;
+  }
 `;
 
 const InputGroup = styled.div`
@@ -30,11 +45,11 @@ const InputGroup = styled.div`
   display: flex;
 
   svg{
-  color: #969696;
-  font-size: 18px;
-  display: block;
-  margin: auto;
-  margin-right: 0;
+    color: #969696;
+    font-size: 18px;
+    display: block;
+    margin: auto;
+    margin-right: 0;
   }
 `;
 
@@ -43,12 +58,27 @@ const Input = styled.input`
   border: none;
   background: none;
   font-size: 17px;
-  color: #000000;
+  color: ${(props) => props.error ?
+    '#EC625C' :
+    (props.confirm ?
+      '#27AE60' :
+      '#000000'
+    )};
   flex: 1;
   
   &::placeholder{
     color: #BEBFBF;
   }
+
+  &:focus{
+    color: #000000;
+  }
+`;
+
+const Message = styled.p`
+  color: #EC625C;
+  font-size: 11px;
+  margin: 0;
 `;
 
 export default function SignUpInput({
@@ -66,10 +96,12 @@ export default function SignUpInput({
   return (
     <>
       <InputContainer error={!!error} confirm={isDirty && !error} >
-        <Label>
+        <Label error={!!error} confirm={isDirty && !error}>
           {label}
-          <InputGroup>
+          <InputGroup error={!!error} confirm={isDirty && !error}>
             <Input
+              error={!!error}
+              confirm={isDirty && !error}
               type={password ? 'password' : 'text'}
               placeholder={placeholder}
               {...register(name, {required, validate})}
@@ -78,7 +110,7 @@ export default function SignUpInput({
           </InputGroup>
         </Label>
       </InputContainer>
-      {error && <p>{error.type === 'required' ? '필수 입력항목 입니다' : error.message}</p>}
+      {error && <Message>{error.type === 'required' ? '필수 입력항목 입니다' : error.message}</Message>}
     </>
   );
 }
