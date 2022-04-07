@@ -1,7 +1,7 @@
 import React from 'react';
-import {TiDelete} from 'react-icons/ti';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import {ReactComponent as Clear} from '../assets/member-close.svg';
 
 const InputContainer = styled.div`
   background: ${(props) => props.error ?
@@ -45,11 +45,19 @@ const InputGroup = styled.div`
   display: flex;
 
   svg{
-    color: #969696;
-    font-size: 18px;
     display: block;
     margin: auto;
     margin-right: 0;
+    fill: ${(props) => props.error ?
+    '#EC625C' :
+    (props.confirm ?
+      '#27AE60' :
+      '#969696'
+    )};
+  }
+
+  &:focus-within svg{
+    fill: #969696;
   }
 `;
 
@@ -95,18 +103,22 @@ export default function SignUpInput({
 }) {
   return (
     <>
-      <InputContainer error={!!error} confirm={isDirty && !error} >
-        <Label error={!!error} confirm={isDirty && !error}>
+      <InputContainer error={error} confirm={isDirty && !error} >
+        <Label error={error} confirm={isDirty && !error}>
           {label}
-          <InputGroup error={!!error} confirm={isDirty && !error}>
+          <InputGroup error={error} confirm={isDirty && !error}>
             <Input
-              error={!!error}
+              error={error}
               confirm={isDirty && !error}
               type={password ? 'password' : 'text'}
               placeholder={placeholder}
               {...register(name, {required, validate})}
             />
-            <TiDelete onClick={() => reset({[name]: ''})} />
+            <Clear
+              onClick={() => reset({[name]: ''})}
+              width="13"
+              height="13"
+            />
           </InputGroup>
         </Label>
       </InputContainer>
