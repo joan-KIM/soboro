@@ -9,6 +9,22 @@ const Page = styled.div`
   padding: 17px;
 `;
 
+const Title = styled.p`
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+const Submit = styled.input`
+  border: none;
+  background: #FFD12D;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 38px;
+  text-align: center;
+  width: 100%;
+`;
+
 export default function SignUpPage() {
   const {register, handleSubmit, reset, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
 
@@ -18,8 +34,8 @@ export default function SignUpPage() {
 
   return (
     <Page>
-      <Link to="/account/login"><Close /></Link>
-      <p>회원가입</p>
+      <Link to="/account/login"><Close width="24" height="24" /></Link>
+      <Title>회원가입</Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SignUpInput
           required
@@ -108,7 +124,7 @@ export default function SignUpPage() {
             </label>
           </li>
         </ul>
-        <input type="submit" value="확인" />
+        <Submit type="submit" value="회원가입" />
       </form>
     </Page>
   );
