@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import {ReactComponent as Clear} from '../assets/member-close.svg';
+import Icon, {ICON_TYPE} from './common/Icon';
 
 const InputContainer = styled.div`
   background: ${(props) => props.error ?
@@ -114,11 +114,7 @@ export default function SignUpInput({
               placeholder={placeholder}
               {...register(name, {required, validate})}
             />
-            <Clear
-              onClick={() => reset({[name]: ''})}
-              width="13"
-              height="13"
-            />
+            <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => reset({[name]: ''})} />
           </InputGroup>
         </Label>
       </InputContainer>
