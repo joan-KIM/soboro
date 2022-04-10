@@ -62,6 +62,7 @@ const InputGroup = styled.div`
 `;
 
 const Input = styled.input`
+  padding: 0;
   outline: none;
   border: none;
   background: none;

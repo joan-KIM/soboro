@@ -26,6 +26,8 @@ const Submit = styled.input`
   border-radius: 38px;
   text-align: center;
   width: 100%;
+  -webkit-appearance: none;
+  color: #000000;
 `;
 
 const CheckList = styled.ul`
