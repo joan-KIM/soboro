@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import SignUpInput from '../components/SignUpInput';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import {ReactComponent as Close} from '../assets/close.svg';
+import {ReactComponent as CheckMark} from '../assets/check.svg';
 
 const Page = styled.div`
   padding: 17px;
@@ -12,6 +13,8 @@ const Page = styled.div`
 const Title = styled.p`
   font-size: 30px;
   font-weight: 700;
+  padding: 31px 0 35px;
+  margin: 0;
 `;
 
 const Submit = styled.input`
@@ -25,8 +28,55 @@ const Submit = styled.input`
   width: 100%;
 `;
 
+const CheckList = styled.ul`
+  list-style: none;
+  margin: 62px 0 26px;
+  padding: 0;
+  color: #707070;
+  font-size: 13px;
+
+  li{
+    padding: 3.5px 0;
+  }
+`;
+
+const Form = styled.form`
+  & > div{
+    margin-bottom: 16px;
+  }
+`;
+
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  opacity: 0;
+  position: absolute;
+`;
+
+const Checkbox = styled.div`
+  width: 9px;
+  height: 9px;
+  margin: 0 9px 0 6px;
+  border: 1px solid ${(props) => props.checked ? '#27AE60' : '#707070'};
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: ${(props) => props.checked ? '#27AE60' : 'none'};
+  position: relative;
+
+  svg{
+    position: absolute;
+    top:1.5px;
+    visibility: ${(props) => props.checked ? 'visible' : 'hidden'};
+  }
+`;
+
+
 export default function SignUpPage() {
   const {register, handleSubmit, reset, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
+  const [checked, setChecked] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -36,7 +86,7 @@ export default function SignUpPage() {
     <Page>
       <Link to="/account/login"><Close width="24" height="24" /></Link>
       <Title>회원가입</Title>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <SignUpInput
           required
           reset={reset}
@@ -104,28 +154,37 @@ export default function SignUpPage() {
           isDirty={dirtyFields.birthday}
           error={errors.birthday}
         />
-        <ul>
+        <CheckList>
           <li>
-            <label>
-              <input type="checkbox" />
+            <Label>
+              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
+              <Checkbox checked={checked}>
+                <CheckMark />
+              </Checkbox>
               (필수) 개인정보 수집 및 이용 동의
-            </label>
+            </Label>
           </li>
           <li>
-            <label>
-              <input type="checkbox" />
+            <Label>
+              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
+              <Checkbox checked={checked}>
+                <CheckMark />
+              </Checkbox>
               (필수) 추억을 보낸 친구와 타임라인 공유하기
-            </label>
+            </Label>
           </li>
           <li>
-            <label>
-              <input type="checkbox" />
+            <Label>
+              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
+              <Checkbox checked={checked}>
+                <CheckMark />
+              </Checkbox>
               (필수) 성실하게 추억을 기록하고 나누기
-            </label>
+            </Label>
           </li>
-        </ul>
+        </CheckList>
         <Submit type="submit" value="회원가입" />
-      </form>
+      </Form>
     </Page>
   );
 }

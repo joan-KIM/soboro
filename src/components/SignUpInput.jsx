@@ -102,7 +102,7 @@ export default function SignUpInput({
   placeholder,
 }) {
   return (
-    <>
+    <div>
       <InputContainer error={error} confirm={isDirty && !error} >
         <Label error={error} confirm={isDirty && !error}>
           {label}
@@ -123,7 +123,7 @@ export default function SignUpInput({
         </Label>
       </InputContainer>
       {error && <Message>{error.type === 'required' ? '필수 입력항목 입니다' : error.message}</Message>}
-    </>
+    </div>
   );
 }
 
