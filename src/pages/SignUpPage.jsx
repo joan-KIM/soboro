@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import SignUpInput from '../components/SignUpInput';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
-import {ReactComponent as Close} from '../assets/close.svg';
-import {ReactComponent as CheckMark} from '../assets/check.svg';
+import Icon, {ICON_TYPE} from '../components/common/Icon';
+import CheckboxInput from '../components/common/CheckboxInput';
 
 const Page = styled.div`
   padding: 17px;
@@ -46,37 +46,8 @@ const Form = styled.form`
   }
 `;
 
-const Label = styled.label`
-  display: flex;
-  align-items: center;
-`;
-
-const Input = styled.input`
-  opacity: 0;
-  position: absolute;
-`;
-
-const Checkbox = styled.div`
-  width: 9px;
-  height: 9px;
-  margin: 0 9px 0 6px;
-  border: 1px solid ${(props) => props.checked ? '#27AE60' : '#707070'};
-  border-radius: 50%;
-  box-sizing: border-box;
-  background: ${(props) => props.checked ? '#27AE60' : 'none'};
-  position: relative;
-
-  svg{
-    position: absolute;
-    top:1.5px;
-    visibility: ${(props) => props.checked ? 'visible' : 'hidden'};
-  }
-`;
-
-
 export default function SignUpPage() {
   const {register, handleSubmit, reset, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
-  const [checked, setChecked] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -84,7 +55,9 @@ export default function SignUpPage() {
 
   return (
     <Page>
-      <Link to="/account/login"><Close width="24" height="24" /></Link>
+      <Link to="/account/login">
+        <Icon type={ICON_TYPE.CLOSE} size={24} />
+      </Link>
       <Title>회원가입</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <SignUpInput
@@ -156,31 +129,13 @@ export default function SignUpPage() {
         />
         <CheckList>
           <li>
-            <Label>
-              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
-              <Checkbox checked={checked}>
-                <CheckMark />
-              </Checkbox>
-              (필수) 개인정보 수집 및 이용 동의
-            </Label>
+            <CheckboxInput label="(필수) 개인정보 수집 및 이용 동의" />
           </li>
           <li>
-            <Label>
-              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
-              <Checkbox checked={checked}>
-                <CheckMark />
-              </Checkbox>
-              (필수) 추억을 보낸 친구와 타임라인 공유하기
-            </Label>
+            <CheckboxInput label="(필수) 추억을 보낸 친구와 타임라인 공유하기" />
           </li>
           <li>
-            <Label>
-              <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
-              <Checkbox checked={checked}>
-                <CheckMark />
-              </Checkbox>
-              (필수) 성실하게 추억을 기록하고 나누기
-            </Label>
+            <CheckboxInput label="(필수) 성실하게 추억을 기록하고 나누기" />
           </li>
         </CheckList>
         <Submit type="submit" value="회원가입" />
