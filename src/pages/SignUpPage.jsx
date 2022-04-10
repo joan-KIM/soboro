@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
+import {findUserByName} from '../firebase/firestore';
 
 const Page = styled.div`
   padding: 17px;
@@ -75,6 +76,13 @@ export default function SignUpPage() {
           placeholder="영문 사용자 이름 입력"
           validate={{
             pattern: (v) => /^[a-z0-9._]{5,20}$/.test(v) || '5~20자의 영문 소문자, 숫자와 특수기호(_),(.)만 사용 가능합니다.',
+            isUnique: async (v) => {
+              const user = await findUserByName(v);
+              if (user) {
+                return '중복된 사용자 이름 입니다.';
+              }
+              return true;
+            },
           }}
           isDirty={dirtyFields.username}
           error={errors.username}
