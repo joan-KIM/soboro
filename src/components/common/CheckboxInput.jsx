@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 import {ReactComponent as CheckMark} from '../../assets/check.svg';
 
 const Label = styled.label`
@@ -29,10 +30,10 @@ const Checkbox = styled.div`
   }
 `;
 
-export default function CheckboxInput({label}) {
+export default function CheckboxInput({label, name, register, required, checked}) {
   return (
     <Label>
-      <Input type="checkbox" checked={checked} onClick={(e) => setChecked(!checked)} />
+      <Input type="checkbox" {...register(name, {required})} />
       <Checkbox checked={checked}>
         <CheckMark />
       </Checkbox>
@@ -42,5 +43,9 @@ export default function CheckboxInput({label}) {
 }
 
 CheckboxInput.propTypes = {
-  label: Proptypes.string,
+  label: propTypes.string,
+  name: propTypes.string.isRequired,
+  register: propTypes.func.isRequired,
+  required: propTypes.bool,
+  checked: propTypes.bool,
 };

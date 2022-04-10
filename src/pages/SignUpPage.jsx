@@ -47,7 +47,10 @@ const Form = styled.form`
 `;
 
 export default function SignUpPage() {
-  const {register, handleSubmit, reset, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
+  const {register, handleSubmit, reset, watch, formState: {errors, dirtyFields}} = useForm({mode: 'onBlur'});
+  const privateChecked = watch('private');
+  const shareChecked = watch('share');
+  const recordChecked = watch('record');
 
   const onSubmit = (data) => {
     console.log(data);
@@ -128,14 +131,29 @@ export default function SignUpPage() {
           error={errors.birthday}
         />
         <CheckList>
-          <li>
-            <CheckboxInput label="(필수) 개인정보 수집 및 이용 동의" />
+          <li key="private">
+            <CheckboxInput
+              label="(필수) 개인정보 수집 및 이용 동의"
+              register={register}
+              name="private"
+              checked={privateChecked}
+            />
           </li>
-          <li>
-            <CheckboxInput label="(필수) 추억을 보낸 친구와 타임라인 공유하기" />
+          <li key="share">
+            <CheckboxInput
+              label="(필수) 추억을 보낸 친구와 타임라인 공유하기"
+              register={register}
+              name="share"
+              checked={shareChecked}
+            />
           </li>
-          <li>
-            <CheckboxInput label="(필수) 성실하게 추억을 기록하고 나누기" />
+          <li key="record">
+            <CheckboxInput
+              label="(필수) 성실하게 추억을 기록하고 나누기"
+              register={register}
+              name="record"
+              checked={recordChecked}
+            />
           </li>
         </CheckList>
         <Submit type="submit" value="회원가입" />
