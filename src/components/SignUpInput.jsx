@@ -102,6 +102,7 @@ export default function SignUpInput({
   validate,
   placeholder,
 }) {
+  console.log(name, isDirty, error);
   return (
     <div>
       <InputContainer error={error} confirm={isDirty && !error} >
@@ -115,7 +116,7 @@ export default function SignUpInput({
               placeholder={placeholder}
               {...register(name, {required, validate})}
             />
-            <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => reset({[name]: ''})} />
+            <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => reset(name, {keepDirty: true})} />
           </InputGroup>
         </Label>
       </InputContainer>

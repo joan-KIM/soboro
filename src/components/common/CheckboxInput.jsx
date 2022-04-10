@@ -33,7 +33,7 @@ const Checkbox = styled.div`
 export default function CheckboxInput({label, name, register, required, checked}) {
   return (
     <Label>
-      <Input type="checkbox" {...register(name, {required})} />
+      <Input type="checkbox" {...register(name, {validate: (v) => !required || v})} />
       <Checkbox checked={checked}>
         <CheckMark />
       </Checkbox>
