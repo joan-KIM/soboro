@@ -102,7 +102,6 @@ export default function SignUpInput({
   validate,
   placeholder,
 }) {
-  console.log(name, isDirty, error);
   return (
     <div>
       <InputContainer error={error} confirm={isDirty && !error} >
