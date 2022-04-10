@@ -53,6 +53,7 @@ export default function SignUpPage() {
   const privateChecked = watch('private');
   const shareChecked = watch('share');
   const recordChecked = watch('record');
+  const password = watch('password');
 
   const onSubmit = (data) => {
     console.log(data);
@@ -73,7 +74,7 @@ export default function SignUpPage() {
           register={register}
           placeholder="영문 사용자 이름 입력"
           validate={{
-            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+            pattern: (v) => /^[a-z0-9._]{5,20}$/.test(v) || '5~20자의 영문 소문자, 숫자와 특수기호(_),(.)만 사용 가능합니다.',
           }}
           isDirty={dirtyFields.username}
           error={errors.username}
@@ -86,7 +87,7 @@ export default function SignUpPage() {
           placeholder="abcde@gmail.com"
           reset={reset}
           validate={{
-            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+            pattern: (v) => /^[^@]+@[^@]+$/.test(v) || '이메일 형식이 맞지 않습니다.',
           }}
           isDirty={dirtyFields.email}
           error={errors.email}
@@ -100,7 +101,7 @@ export default function SignUpPage() {
           placeholder="비밀번호 입력"
           reset={reset}
           validate={{
-            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+            pattern: (v) => /^[\w\W]{8,}$/.test(v) || '8자 이상 입력하세요.',
           }}
           isDirty={dirtyFields.password}
           error={errors.password}
@@ -114,7 +115,7 @@ export default function SignUpPage() {
           placeholder="비밀번호 재입력"
           reset={reset}
           validate={{
-            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+            confirm: (v) => password == v || '비밀번호가 일치하지 않습니다.',
           }}
           isDirty={dirtyFields.confirmPassword}
           error={errors.confirmPassword}
@@ -127,7 +128,7 @@ export default function SignUpPage() {
           placeholder="숫자 6자리 입력"
           reset={reset}
           validate={{
-            minLength: (v) => v.length > 6 || '최소 6자 이상 입력해주세요.',
+            pattern: (v) => /^\d{2}(0[1-9]|1[0-2])([1-2][0-9]|3[0-1]|0[1-9])$/.test(v) || '생일 형식이 맞지 않습니다.',
           }}
           isDirty={dirtyFields.birthday}
           error={errors.birthday}
