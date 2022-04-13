@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import SignUpInput from '../components/SignUpInput';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByName} from '../firebase/firestore';
+import {createUser} from '../firebase/auth';
 
 const Page = styled.div`
   padding: 17px;
@@ -57,11 +58,19 @@ export default function SignUpPage() {
   const shareChecked = watch('share');
   const recordChecked = watch('record');
   const password = watch('password');
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const isValid = await trigger();
     if (isValid) {
-      console.log(data);
+      const user = {
+        name: data.username,
+        email: data.email,
+        password: data.password,
+        birthday: data.birthday,
+      };
+      await createUser(user);
+      navigate('/account/login');
     }
   };
 
