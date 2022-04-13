@@ -112,6 +112,15 @@ export const findUserByName = async (name) => {
   return user;
 };
 
+export const findUserByEmail = async (email) => {
+  const querySnapshot = await getDocs(query(usersRef, where('email', '==', email)));
+  let user = null;
+  querySnapshot.forEach((doc) => {
+    user = doc.data();
+  });
+  return user;
+};
+
 export const getFriends = async (user) => {
   return Promise.all(user.friend.list.map((friend) => getUser(friend.uid)));
 };

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
-import {findUserByName} from '../firebase/firestore';
+import {findUserByEmail, findUserByName} from '../firebase/firestore';
 import {createUser} from '../firebase/auth';
 
 const Page = styled.div`
@@ -110,6 +110,13 @@ export default function SignUpPage() {
           reset={resetField}
           validate={{
             pattern: (v) => /^[^@]+@[^@]+$/.test(v) || '이메일 형식이 맞지 않습니다.',
+            isUnique: async (v) => {
+              const user = await findUserByEmail(v);
+              if (user) {
+                return '중복된 이메일 입니다.';
+              }
+              return true;
+            },
           }}
           isDirty={dirtyFields.email}
           error={errors.email}
