@@ -36,7 +36,7 @@ const Input = styled.input`
   }
 `;
 
-export default function LoginInput({name, required, register, password, placeholder}) {
+export default function LoginInput({name, required, register, resetField, password, placeholder}) {
   return (
     <Div>
       <Input
@@ -44,7 +44,7 @@ export default function LoginInput({name, required, register, password, placehol
         placeholder={placeholder}
         {...register(name, {required})}
       />
-      <Icon type={ICON_TYPE.CLEAR} size={13} />
+      <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => resetField(name)} />
     </Div>
   );
 }
@@ -54,5 +54,6 @@ LoginInput.propTypes = {
   required: PropTypes.bool,
   register: PropTypes.func.isRequired,
   password: PropTypes.bool,
+  resetField: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
 };

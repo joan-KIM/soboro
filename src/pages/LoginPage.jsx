@@ -10,7 +10,7 @@ const Page = styled.div`
 `;
 
 export default function LoginPage() {
-  const {register} = useForm();
+  const {resetField, register} = useForm();
 
   return (
     <Page>
@@ -20,6 +20,7 @@ export default function LoginPage() {
         required
         name="email"
         register={register}
+        resetField={resetField}
         placeholder="이메일 주소"
       />
       <LoginInput
@@ -27,6 +28,7 @@ export default function LoginPage() {
         password
         name="password"
         register={register}
+        resetField={resetField}
         placeholder="비밀번호"
       />
       <Auth />
