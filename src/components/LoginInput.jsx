@@ -14,6 +14,15 @@ const Div = styled.div`
   svg{
     fill: #969696;
   }
+
+  &:focus-within{
+    background: #FFFFFF;
+    border: 1px solid #000000;
+  }
+  
+  &:focus-within svg{
+    fill: #000000;
+  }
 `;
 
 const Input = styled.input`
