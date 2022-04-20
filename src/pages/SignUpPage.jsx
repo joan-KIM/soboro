@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByEmail, findUserByName} from '../firebase/firestore';
-import {createUser} from '../firebase/auth';
+import {useAuth} from '../hooks/useAuth';
 
 const Page = styled.div`
   padding: 17px;
@@ -59,6 +59,7 @@ export default function SignUpPage() {
   const recordChecked = watch('record');
   const password = watch('password');
   const navigate = useNavigate();
+  const {signup} = useAuth();
 
   const onSubmit = async (data) => {
     const isValid = await trigger();
@@ -69,7 +70,7 @@ export default function SignUpPage() {
         password: data.password,
         birthday: data.birthday,
       };
-      await createUser(user);
+      await signup(user);
       navigate('/account/login');
     }
   };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {createUser, login, logout, resetPassword} from '../firebase/auth';
+import {errorMessage} from '../constants/error';
 import {findUserByName} from '../firebase/firestore';
 import {useAuth} from '../hooks/useAuth';
 
@@ -8,11 +8,12 @@ function Auth() {
   const [password, setPassword] = useState('123456');
   const [name, setName] = useState('박은우');
   const [birthday, setBirthday] = useState('1996-12-18');
-  const {user} = useAuth();
+  const {user, login, signup, logout, resetPassword, error, clearError} = useAuth();
   const [isSameName, setIsSameName] = useState(false);
 
   return (
     <div>
+      {error && <div>{errorMessage[error]}<button onClick={clearError}>확인</button></div>}
       <h1>Current User</h1>
       {user && <dl>
         <dt>name</dt>
@@ -47,10 +48,11 @@ function Auth() {
       </label>
 
       <button onClick={() => {
-        createUser({email, password, name, birthday});
+        signup({email, password, name, birthday});
       }}>Sign Up</button>
-      <button onClick={() => {
-        login(email, password);
+      <button onClick={async () => {
+        const res = await login(email, password);
+        console.log(res);
       }}>Login</button>
       <button onClick={() => logout()}>Logout</button>
       <button onClick={() => resetPassword(email)}>Reset Password</button>
