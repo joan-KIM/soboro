@@ -19,7 +19,7 @@ const Div = styled.div`
     background: #FFFFFF;
     border: 1px solid #000000;
   }
-  
+
   &:focus-within svg{
     fill: #000000;
   }
@@ -36,15 +36,23 @@ const Input = styled.input`
   }
 `;
 
-export default function LoginInput({placeholder}) {
+export default function LoginInput({name, required, register, password, placeholder}) {
   return (
     <Div>
-      <Input type="text" placeholder={placeholder} />
+      <Input
+        type={password ? 'password' : 'text'}
+        placeholder={placeholder}
+        {...register(name, {required})}
+      />
       <Icon type={ICON_TYPE.CLEAR} size={13} />
     </Div>
   );
 }
 
 LoginInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  register: PropTypes.func.isRequired,
+  password: PropTypes.bool,
   placeholder: PropTypes.string.isRequired,
 };
