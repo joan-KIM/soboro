@@ -7,6 +7,7 @@ import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByEmail, findUserByName} from '../firebase/firestore';
 import {useAuth} from '../hooks/useAuth';
+import Button from '../components/common/Button';
 
 const Page = styled.div`
   padding: 17px;
@@ -17,19 +18,6 @@ const Title = styled.p`
   font-weight: 700;
   padding: 31px 0 35px;
   margin: 0;
-`;
-
-const Submit = styled.input`
-  border: none;
-  background: #FFD12D;
-  font-size: 17px;
-  font-weight: 600;
-  padding: 15px;
-  border-radius: 38px;
-  text-align: center;
-  width: 100%;
-  -webkit-appearance: none;
-  color: #000000;
 `;
 
 const CheckList = styled.ul`
@@ -192,7 +180,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
-        <Submit type="submit" value="회원가입" />
+        <Button type="submit" value="회원가입" />
       </Form>
     </Page>
   );
