@@ -1,10 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import {ReactComponent as Logo} from '../assets/logo.svg';
 import Button from '../components/common/Button';
+import {useAuth} from '../hooks/useAuth';
+import {errorMessage} from '../constants/error';
 
 const Page = styled.div`
   padding: 21px;
@@ -50,7 +52,18 @@ const A = styled.a`
 
 
 export default function LoginPage() {
-  const {resetField, register} = useForm();
+  const {resetField, register, handleSubmit} = useForm();
+  const {login} = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit = async ({email, password}) => {
+    const error = await login(email, password);
+    if (error) {
+      alert(errorMessage[error]);
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <Page>
@@ -58,7 +71,7 @@ export default function LoginPage() {
         <Logo width="93" height="87" />
         <Title>Soboro</Title>
       </Div>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <LoginInput
           required
           name="email"
