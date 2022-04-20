@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
-import {findUserByName} from '../firebase/firestore';
-import {createUser} from '../firebase/auth';
+import {findUserByEmail, findUserByName} from '../firebase/firestore';
+import {useAuth} from '../hooks/useAuth';
+import Button from '../components/common/Button';
 
 const Page = styled.div`
   padding: 17px;
@@ -17,19 +18,6 @@ const Title = styled.p`
   font-weight: 700;
   padding: 31px 0 35px;
   margin: 0;
-`;
-
-const Submit = styled.input`
-  border: none;
-  background: #FFD12D;
-  font-size: 17px;
-  font-weight: 600;
-  padding: 15px;
-  border-radius: 38px;
-  text-align: center;
-  width: 100%;
-  -webkit-appearance: none;
-  color: #000000;
 `;
 
 const CheckList = styled.ul`
@@ -59,6 +47,7 @@ export default function SignUpPage() {
   const recordChecked = watch('record');
   const password = watch('password');
   const navigate = useNavigate();
+  const {signup} = useAuth();
 
   const onSubmit = async (data) => {
     const isValid = await trigger();
@@ -69,7 +58,7 @@ export default function SignUpPage() {
         password: data.password,
         birthday: data.birthday,
       };
-      await createUser(user);
+      await signup(user);
       navigate('/account/login');
     }
   };
@@ -110,6 +99,13 @@ export default function SignUpPage() {
           reset={resetField}
           validate={{
             pattern: (v) => /^[^@]+@[^@]+$/.test(v) || '이메일 형식이 맞지 않습니다.',
+            isUnique: async (v) => {
+              const user = await findUserByEmail(v);
+              if (user) {
+                return '중복된 이메일 입니다.';
+              }
+              return true;
+            },
           }}
           isDirty={dirtyFields.email}
           error={errors.email}
@@ -184,7 +180,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
-        <Submit type="submit" value="회원가입" />
+        <Button type="submit" value="회원가입" />
       </Form>
     </Page>
   );

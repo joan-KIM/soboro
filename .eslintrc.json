@@ -8,6 +8,11 @@
     "plugin:react/recommended",
     "google"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "parserOptions": {
     "ecmaFeatures": {
         "jsx": true
@@ -21,5 +26,6 @@
   "rules": {
     "require-jsdoc": "off",
     "max-len": ["error", {"code": 120}]
-  }
+  },
+  "ignorePatterns": ["node_modules/"]
 }
