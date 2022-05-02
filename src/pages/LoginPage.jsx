@@ -42,12 +42,12 @@ const Form = styled.form`
   input[type="button"]{
     margin-bottom: 16px;
   }
-`;
 
-const A = styled.a`
-  text-decoration: none;
-  color: #707070;
-  font-size: 15px;
+  a{
+    text-decoration: none;
+    color: #707070;
+    font-size: 15px;
+  }
 `;
 
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
         />
         <Button type="submit" value="로그인" />
         <Link to="/account/signup"><Button type="button" value="회원가입" /></Link>
-        <A href="">비밀번호를 잊으셨나요?</A>
+        <Link to="/account/resetpassword">비밀번호를 잊으셨나요?</Link>
       </Form>
     </Page>
   );

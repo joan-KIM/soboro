@@ -17,6 +17,7 @@ import RequiredAuth from './components/RequiredAuth';
 import {AuthProvider} from './hooks/useAuth';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePhotoPage from './pages/ProfilePhotoPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />
+            <Route path="/account/resetpassword" element={<ResetPasswordPage />} />
             <Route path="/" element={
               <RequiredAuth to="/account/login">
                 <TimelinePage />
