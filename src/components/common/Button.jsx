@@ -13,15 +13,21 @@ const Btn = styled.input`
   width: 100%;
   -webkit-appearance: none;
   color: #000000;
+
+  &:disabled{
+    background: #F0F0F0;
+    color: #A3A3A3;
+  }
 `;
 
-export default function Button({type, value}) {
+export default function Button({type, value, disabled}) {
   return (
-    <Btn type={type} value={value} />
+    <Btn type={type} value={value} disabled={disabled ? true : false} />
   );
 }
 
 Button.propTypes = {
   type: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };

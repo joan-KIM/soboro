@@ -40,7 +40,7 @@ const Form = styled.form`
 
 export default function SignUpPage() {
   const {register, handleSubmit, resetField, watch, trigger,
-    formState: {errors, dirtyFields},
+    formState: {errors, dirtyFields, isValid},
   } = useForm({mode: 'onBlur', reValidateMode: 'onBlur'});
   const privateChecked = watch('private');
   const shareChecked = watch('share');
@@ -180,7 +180,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
-        <Button type="submit" value="회원가입" />
+        <Button type="submit" value="회원가입" disabled={!isValid} />
       </Form>
     </Page>
   );
