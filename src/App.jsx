@@ -30,7 +30,11 @@ function App() {
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />
             <Route path="/account/resetpassword" element={<ResetPasswordPage />} />
-            <Route path="/account/photo" element={<ProfilePhotoPage />} />
+            <Route path="/account/photo" element={
+              <RequiredAuth to="/account/login">
+                <ProfilePhotoPage />
+              </RequiredAuth>}
+            />
             <Route path="/" element={
               <RequiredAuth to="/account/login">
                 <TimelinePage />

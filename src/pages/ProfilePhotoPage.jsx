@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {useForm} from 'react-hook-form';
 import ProfileUploader from '../components/ProfileUploader';
 import Button from '../components/common/Button';
@@ -8,16 +8,19 @@ import {getURL} from '../firebase/storage';
 import {useUser} from '../hooks/useUser';
 
 export default function ProfilePhotoPage() {
-  const {register, handleSubmit} = useForm();
+  const {handleSubmit} = useForm();
   const {user, updatePhotoUrl} = useUser();
-  const {upload} = useStorage(user?.uid);
+  const {upload, error} = useStorage(user?.uid);
+  const [where, setWhere] = useState('');
   const [url, setPhotoUrl] = useState();
+  const ref = useRef();
 
   const onSubmit = async ({profile}) => {
     // 유저에 프로필 이미지를 설정한다는 것
     // 1. storage에 이미지를 저장
     // 2. 유저 db(firestore)에 이미지 주소를 저장
-    const [file] = profile;
+    const [file] = ref.current.files;
+    setWhere(JSON.stringify(ref.current.files, null, 2));
     let photoUrl = '';
     // file이 있는 경우
     if (file) {
@@ -36,9 +39,11 @@ export default function ProfilePhotoPage() {
   return (
     <div>
       <h1>프로필 사진 추가 페이지</h1>
-      <img src={url} alt="프로필 사진" width={111} height={111} />
+      {error && <p>{error.message}</p>}
+      <p>{where}</p>
+      <img src={url} alt="프로필 사진" width={111} height={111} style={{borderRadius: '50%'}} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ProfileUploader name="profile" register={register} />
+        <ProfileUploader ref={ref} />
         <Button type="submit" value="시작하기" />
       </form>
     </div>

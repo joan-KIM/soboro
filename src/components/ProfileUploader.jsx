@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, forwardRef} from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Div = styled.div`
     width: 150px;
@@ -8,7 +8,7 @@ const Div = styled.div`
     border: 1px solid black;
 `;
 
-export default function ProfileUploader({name, register}) {
+export default forwardRef(function ProfileUploader(props, ref) {
   const [preview, setPreview] = useState('');
   const onChange = async (e) => {
     const [file] = e.target.files;
@@ -23,14 +23,14 @@ export default function ProfileUploader({name, register}) {
     <div>
       <Div>
         {!preview && <img />}
-        {preview && <img src={preview} alt="미리보기" />}
+        {preview && <img src={preview} alt="미리보기" width={111} height={111} />}
       </Div>
-      <input {...register(name)} type="file" accept="image/*" onChange={onChange} />
+      <input ref={ref} type="file" accept="image/*" onChange={onChange} />
     </div>
   );
-}
+});
 
-ProfileUploader.propTypes = {
-  name: PropTypes.string.isRequired,
-  register: PropTypes.func.isRequired,
-};
+// ProfileUploader.propTypes = {
+//   name: PropTypes.string.isRequired,
+//   register: PropTypes.func.isRequired,
+// };
