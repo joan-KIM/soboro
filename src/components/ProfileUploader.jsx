@@ -1,6 +1,5 @@
 import React, {useState, forwardRef} from 'react';
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 
 const Div = styled.div`
     width: 150px;
@@ -29,8 +28,3 @@ export default forwardRef(function ProfileUploader(props, ref) {
     </div>
   );
 });
-
-// ProfileUploader.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   register: PropTypes.func.isRequired,
-// };
