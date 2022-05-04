@@ -21,7 +21,7 @@ export default function ProfilePhotoPage() {
     let photoUrl = '';
     // file이 있는 경우
     if (file) {
-      const compressedFile = await compress(file, 120, 120);
+      const compressedFile = await compress(file, 200, 200);
       photoUrl = await upload(compressedFile);
     } else {
       // 기본이미지중 랜덤으로 하나 선택
@@ -36,7 +36,7 @@ export default function ProfilePhotoPage() {
   return (
     <div>
       <h1>프로필 사진 추가 페이지</h1>
-      <img src={url} alt="프로필 사진" />
+      <img src={url} alt="프로필 사진" width={111} height={111} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <ProfileUploader name="profile" register={register} />
         <Button type="submit" value="시작하기" />

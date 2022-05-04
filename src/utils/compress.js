@@ -5,6 +5,7 @@ export function compress(file, width, height) {
     new Compressor(file, {
       width,
       height,
+      quality: 1,
       resize: 'cover',
       success: resolve,
       error: reject,
