@@ -86,6 +86,11 @@ export const addUser = (user) => {
   return setDoc(userRef, {uid, email, name, birthday, friend: {list: [], requested: [], requesting: []}});
 };
 
+export const updateUser = (user) => {
+  const userRef = getUserRef(user.uid);
+  return updateDoc(userRef, user);
+};
+
 export const getUserRef = (uid) => {
   return doc(usersRef, uid);
 };
