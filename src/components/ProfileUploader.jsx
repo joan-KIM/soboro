@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import {compress} from './../utils/compress';
-import {useAuth} from './../hooks/useAuth';
-import {uploadFile} from '../firebase/storage';
+import PropTypes from 'prop-types';
 
 const Div = styled.div`
     width: 150px;
@@ -10,9 +8,8 @@ const Div = styled.div`
     border: 1px solid black;
 `;
 
-export default function ProfileUploader() {
+export default function ProfileUploader({name, register}) {
   const [preview, setPreview] = useState('');
-  const {user} = useAuth();
   const onChange = async (e) => {
     const [file] = e.target.files;
     if (!file) {
@@ -20,8 +17,6 @@ export default function ProfileUploader() {
       return;
     }
     setPreview(URL.createObjectURL(file));
-    const compressedFile = await compress(file, 120, 120);
-    uploadFile(user.uid, compressedFile);
   };
 
   return (
@@ -30,7 +25,12 @@ export default function ProfileUploader() {
         {!preview && <img />}
         {preview && <img src={preview} alt="미리보기" />}
       </Div>
-      <input type="file" accept="image/*" onChange={onChange} />
+      <input {...register(name)} type="file" accept="image/*" onChange={onChange} />
     </div>
   );
 }
+
+ProfileUploader.propTypes = {
+  name: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+};
