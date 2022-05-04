@@ -14,7 +14,7 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
-import {AuthProvider} from './hooks/useAuth';
+import AuthProvider from './hooks/AuthProvider';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePhotoPage from './pages/ProfilePhotoPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
