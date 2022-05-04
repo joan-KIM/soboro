@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useContext} from 'react';
 import {AuthContext} from './AuthProvider';
 import * as Auth from '../firebase/auth';
 
