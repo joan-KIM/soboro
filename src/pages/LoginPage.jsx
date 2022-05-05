@@ -53,14 +53,14 @@ const Form = styled.form`
 
 export default function LoginPage() {
   const {resetField, register, handleSubmit} = useForm();
-  const {login} = useAuth();
+  const {login, isAuth} = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async ({email, password}) => {
     const error = await login(email, password);
     if (error) {
       alert(errorMessage[error]);
-    } else {
+    } else if (isAuth) {
       navigate('/');
     }
   };

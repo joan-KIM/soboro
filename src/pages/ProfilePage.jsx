@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {useAuth} from '../hooks/useAuth';
 
 export default function ProfilePage() {
+  const {logout} = useAuth();
   return (
     <div>
       <h1>마이페이지</h1>
@@ -13,6 +15,7 @@ export default function ProfilePage() {
         <li>
           <Link to="/friends/list">팔로우 목록</Link>
         </li>
+        <button onClick={() => logout()}>로그아웃</button>
       </ul>
     </div>
   );
