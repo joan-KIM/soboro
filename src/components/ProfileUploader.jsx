@@ -1,10 +1,20 @@
 import React, {useState, forwardRef} from 'react';
 import styled from 'styled-components';
+import Icon, {ICON_TYPE} from './common/Icon';
 
 const Div = styled.div`
-    width: 150px;
-    height: 150px;
-    border: 1px solid black;
+  // background: grey;
+`;
+
+const Input = styled.input`
+  opacity: 0;
+`;
+
+const Preview = styled.img`
+  width: 116px;
+  height: 117px;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 
 export default forwardRef(function ProfileUploader(props, ref) {
@@ -19,12 +29,12 @@ export default forwardRef(function ProfileUploader(props, ref) {
   };
 
   return (
-    <div>
-      <Div>
-        {!preview && <img />}
-        {preview && <img src={preview} alt="미리보기" width={111} height={111} />}
-      </Div>
-      <input ref={ref} type="file" accept="image/*" onChange={onChange} />
-    </div>
+    <Div>
+      <label htmlFor="uploader">
+        {!preview && <Icon type={ICON_TYPE.PROFILE_UPLOAD} color="none" size={116} />}
+        {preview && <Preview src={preview} alt="미리보기" />}
+      </label>
+      <Input id="uploader" ref={ref} type="file" accept="image/*" onChange={onChange} />
+    </Div>
   );
 });
