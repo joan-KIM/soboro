@@ -19,13 +19,29 @@ const Preview = styled.img`
 
 export default forwardRef(function ProfileUploader(props, ref) {
   const [preview, setPreview] = useState('');
+  const fileTypes = [
+    'image/png',
+    'image/jpeg',
+    'image/svg',
+  ];
+
   const onChange = async (e) => {
     const [file] = e.target.files;
+    console.log(file?.type);
     if (!file) {
       setPreview('');
       return;
     }
-    setPreview(URL.createObjectURL(file));
+    if (validFileType(file)) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview('');
+      alert('".jpg", ".png", ".svg" 이미지 파일만 업로드 가능합니다.');
+    }
+  };
+
+  const validFileType = (file) => {
+    return fileTypes.includes(file.type);
   };
 
   return (
