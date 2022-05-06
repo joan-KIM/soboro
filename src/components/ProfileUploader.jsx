@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import Icon, {ICON_TYPE} from './common/Icon';
 
 const Div = styled.div`
-  // background: grey;
+  width: 100%;
+  position: relative;
 `;
 
 const Input = styled.input`
   opacity: 0;
+  position: absolute;
+  top: 0;
 `;
 
 const Preview = styled.img`
@@ -15,6 +18,12 @@ const Preview = styled.img`
   height: 117px;
   object-fit: cover;
   border-radius: 50%;
+`;
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default forwardRef(function ProfileUploader(props, ref) {
@@ -27,7 +36,6 @@ export default forwardRef(function ProfileUploader(props, ref) {
 
   const onChange = async (e) => {
     const [file] = e.target.files;
-    console.log(file?.type);
     if (!file) {
       setPreview('');
       return;
@@ -46,10 +54,10 @@ export default forwardRef(function ProfileUploader(props, ref) {
 
   return (
     <Div>
-      <label htmlFor="uploader">
+      <Label htmlFor="uploader">
         {!preview && <Icon type={ICON_TYPE.PROFILE_UPLOAD} color="none" size={116} />}
         {preview && <Preview src={preview} alt="미리보기" />}
-      </label>
+      </Label>
       <Input id="uploader" ref={ref} type="file" accept="image/*" onChange={onChange} />
     </Div>
   );

@@ -1,16 +1,45 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import ProfileUploader from '../components/ProfileUploader';
 import Button from '../components/common/Button';
 import {compress} from '../utils/compress';
 import {useStorage} from '../hooks/useStorage';
 import {getURL} from '../firebase/storage';
 import {useUser} from '../hooks/useUser';
+import styled from 'styled-components';
+import {useNavigate} from 'react-router-dom';
+
+const Page = styled.div`
+  padding: 17px;
+  height: ${(props) => props.height}px;
+  box-sizing: border-box;
+`;
+
+const P = styled.p`
+  font-weight: 600;
+  font-size: 23px;
+  margin: 0;
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const Form = styled.form`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+`;
 
 export default function ProfilePhotoPage() {
   const {user, updatePhotoUrl} = useUser();
   const {upload} = useStorage(user?.uid);
-  const [url, setPhotoUrl] = useState();
   const ref = useRef();
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -29,18 +58,22 @@ export default function ProfilePhotoPage() {
       photoUrl = await getURL('default_image', n+'.png');
     }
     // 유저 db에 프로필 url 업데이트
-    setPhotoUrl(photoUrl);
     updatePhotoUrl(photoUrl);
+    navigate('/');
   };
 
   return (
-    <div>
-      <h1>프로필 사진 추가 페이지</h1>
-      <img src={url} alt="프로필 사진" width={111} height={111} style={{borderRadius: '50%'}} />
-      <form onSubmit={onSubmit}>
-        <ProfileUploader ref={ref} />
+    <Page height={window.innerHeight}>
+      <Form onSubmit={onSubmit}>
+        <Wrapper>
+          <ProfileUploader ref={ref} />
+          <P>{user?.name}님 환영해요.<br/>
+            프로필 사진을 등록한 후<br/>
+            친구와의 추억을 공유해보세요.
+          </P>
+        </Wrapper>
         <Button type="submit" value="시작하기" />
-      </form>
-    </div>
+      </Form>
+    </Page>
   );
 }
