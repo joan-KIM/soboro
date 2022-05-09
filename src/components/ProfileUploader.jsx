@@ -15,7 +15,7 @@ const Input = styled.input`
 
 const Preview = styled.img`
   width: 116px;
-  height: 117px;
+  height: 116px;
   object-fit: cover;
   border-radius: 50%;
 `;
@@ -26,13 +26,18 @@ const Label = styled.label`
   align-items: center;
 `;
 
+const fileTypes = [
+  'image/png',
+  'image/jpeg',
+  'image/svg',
+];
+
+const validFileType = (file) => {
+  return fileTypes.includes(file.type);
+};
+
 export default forwardRef(function ProfileUploader(props, ref) {
   const [preview, setPreview] = useState('');
-  const fileTypes = [
-    'image/png',
-    'image/jpeg',
-    'image/svg',
-  ];
 
   const onChange = async (e) => {
     const [file] = e.target.files;
@@ -47,10 +52,6 @@ export default forwardRef(function ProfileUploader(props, ref) {
       e.target.value = '';
       alert('".jpg", ".png", ".svg" 이미지 파일만 업로드 가능합니다.');
     }
-  };
-
-  const validFileType = (file) => {
-    return fileTypes.includes(file.type);
   };
 
   return (

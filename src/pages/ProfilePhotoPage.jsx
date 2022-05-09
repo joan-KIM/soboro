@@ -58,7 +58,7 @@ export default function ProfilePhotoPage() {
       photoUrl = await getURL('default_image', n+'.png');
     }
     // 유저 db에 프로필 url 업데이트
-    updatePhotoUrl(photoUrl);
+    await updatePhotoUrl(photoUrl);
     navigate('/');
   };
 
