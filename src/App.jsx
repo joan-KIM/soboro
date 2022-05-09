@@ -14,7 +14,7 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
-import {AuthProvider} from './hooks/useAuth';
+import AuthProvider from './hooks/AuthProvider';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePhotoPage from './pages/ProfilePhotoPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
@@ -30,14 +30,14 @@ function App() {
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />
             <Route path="/account/resetpassword" element={<ResetPasswordPage />} />
-            <Route path="/" element={
-              <RequiredAuth to="/account/login">
-                <TimelinePage />
-              </RequiredAuth>}
-            />
             <Route path="/account/photo" element={
               <RequiredAuth to="/account/login">
                 <ProfilePhotoPage />
+              </RequiredAuth>}
+            />
+            <Route path="/" element={
+              <RequiredAuth to="/account/login">
+                <TimelinePage />
               </RequiredAuth>}
             />
             <Route path="/search" element={

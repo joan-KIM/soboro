@@ -47,7 +47,7 @@ export default function SignUpPage() {
   const recordChecked = watch('record');
   const password = watch('password');
   const navigate = useNavigate();
-  const {signup} = useAuth();
+  const {signup, login} = useAuth();
 
   const onSubmit = async (data) => {
     const isValid = await trigger();
@@ -59,7 +59,8 @@ export default function SignUpPage() {
         birthday: data.birthday,
       };
       await signup(user);
-      navigate('/account/login');
+      await login(user.email, user.password);
+      navigate('/account/photo');
     }
   };
 

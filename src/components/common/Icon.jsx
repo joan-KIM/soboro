@@ -9,6 +9,7 @@ import {ReactComponent as Search} from '../../assets/search.svg';
 import {ReactComponent as Upload} from '../../assets/upload.svg';
 import {ReactComponent as UserPlus} from '../../assets/user-plus.svg';
 import {ReactComponent as User} from '../../assets/user.svg';
+import {ReactComponent as ProfileUpload} from '../../assets/profile-upload.svg';
 
 export const ICON_TYPE = {
   CLEAR: 'clear',
@@ -20,6 +21,7 @@ export const ICON_TYPE = {
   SEARCH: 'search',
   UPLOAD: 'upload',
   USER_PLUS: 'user-plus',
+  PROFILE_UPLOAD: 'profile-upload',
 };
 
 const Icon = ({type, size = 16, color = 'black', onClick}) => {
@@ -49,6 +51,9 @@ const Icon = ({type, size = 16, color = 'black', onClick}) => {
   }
   if (type === ICON_TYPE.USER_PLUS) {
     return <UserPlus width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.PROFILE_UPLOAD) {
+    return <ProfileUpload width={size} height={size} fill={color} onClick={onClick} />;
   }
 
   return null;
