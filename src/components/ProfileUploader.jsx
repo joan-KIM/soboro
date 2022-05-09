@@ -44,6 +44,7 @@ export default forwardRef(function ProfileUploader(props, ref) {
       setPreview(URL.createObjectURL(file));
     } else {
       setPreview('');
+      e.target.value = '';
       alert('".jpg", ".png", ".svg" 이미지 파일만 업로드 가능합니다.');
     }
   };
