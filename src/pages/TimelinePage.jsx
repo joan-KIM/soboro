@@ -1,7 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {useAuth} from '../hooks/useAuth';
+import {useTimeline} from '../hooks/useTimeline';
 
 export default function TimelinePage() {
+  const {user} = useAuth();
+  const {timeline} = useTimeline(user);
+  console.log(timeline);
   return (
     <div>
       <h1>타임라인 페이지</h1>
