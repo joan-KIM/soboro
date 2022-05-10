@@ -98,6 +98,8 @@ export default function ProfilePage() {
   const friends = useFriends();
   const {timelineWithMe} = useTimeline();
   const navigate = useNavigate();
+  const bday = user?.birthday;
+  const birthday = bday.slice(0, 2) + '.' + bday.slice(2, 4) + '.' + bday.slice(4);
 
   return (
     <Page>
@@ -126,7 +128,7 @@ export default function ProfilePage() {
 
         <ReadOnlyInput label="사용자 이름" content={user?.name} />
         <ReadOnlyInput label="이메일 주소" content={user?.email} />
-        <ReadOnlyInput label="생년월일" content={user?.birthday} />
+        <ReadOnlyInput label="생년월일" content={birthday} />
 
         <Div>
           <BlockLevelButton value="친구" color="#4886FF" onClick={() => navigate('/friends/list')}>
