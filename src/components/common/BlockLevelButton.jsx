@@ -12,7 +12,7 @@ const Button = styled.button`
   font-size: 17px;
   font-weight: 600;
   color: ${(props) => props.color};
-  margin: 6px 0;
+  margin: 12px 0;
   display: flex;
   align-items: center;
 

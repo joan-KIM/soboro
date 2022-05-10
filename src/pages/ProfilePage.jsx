@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
 import styled from 'styled-components';
 import ProfilePicture from '../components/ProfilePicture';
@@ -91,10 +91,15 @@ const View = styled.div`
   padding: 28px 0 24px;
 `;
 
+const Div = styled.div`
+  margin: 26px 0;
+`;
+
 export default function ProfilePage() {
-  const {user} = useAuth();
+  const {user, logout} = useAuth();
   const friends = useFriends();
   const {timelineWithMe} = useTimeline();
+  const navigate = useNavigate();
 
   return (
     <Page>
@@ -125,10 +130,12 @@ export default function ProfilePage() {
         <ReadOnlyInput label="이메일 주소" content={user?.email} />
         <ReadOnlyInput label="생년월일" content={user?.birthday} />
 
-        <BlockLevelButton value="친구" color="#4886FF">
-          <Icon type={ICON_TYPE.FORWARD} color="#707070" />
-        </BlockLevelButton>
-        <BlockLevelButton value="로그아웃" color="#4886FF" />
+        <Div>
+          <BlockLevelButton value="친구" color="#4886FF" onClick={() => navigate('/friends/list')}>
+            <Icon type={ICON_TYPE.FORWARD} color="#707070" />
+          </BlockLevelButton>
+        </Div>
+        <BlockLevelButton value="로그아웃" color="#4886FF" onClick={() => logout()} />
         <BlockLevelButton value="회원탈퇴" color="#FF5065" />
       </Main>
     </Page>
