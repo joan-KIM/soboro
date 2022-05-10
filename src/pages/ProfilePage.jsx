@@ -6,10 +6,12 @@ import ProfilePicture from '../components/ProfilePicture';
 import {useFriends} from '../hooks/useFriends';
 import {useTimeline} from '../hooks/useTimeline';
 import ReadOnlyInput from '../components/ReadOnlyInput';
+import BlockLevelButton from '../components/common/BlockLevelButton';
+import Icon, {ICON_TYPE} from '../components/common/Icon';
 
 const Page = styled.div`
   background: #E5E5E5;
-  height: 100vh;
+  height: 100vh; 
 `;
 
 const Header = styled.div`
@@ -122,6 +124,12 @@ export default function ProfilePage() {
         <ReadOnlyInput label="사용자 이름" content={user?.name} />
         <ReadOnlyInput label="이메일 주소" content={user?.email} />
         <ReadOnlyInput label="생년월일" content={user?.birthday} />
+
+        <BlockLevelButton value="친구" color="#4886FF">
+          <Icon type={ICON_TYPE.FORWARD} color="#707070" />
+        </BlockLevelButton>
+        <BlockLevelButton value="로그아웃" color="#4886FF" />
+        <BlockLevelButton value="회원탈퇴" color="#FF5065" />
       </Main>
     </Page>
   );
