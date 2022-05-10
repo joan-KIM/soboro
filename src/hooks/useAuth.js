@@ -39,5 +39,9 @@ export function useAuth() {
     }
   }, []);
 
-  return {...context, signup, login, logout, resetPassword, error, clearError};
+  const withdraw = useCallback(() => {
+    Auth.withdraw(user);
+  }, []);
+
+  return {...context, signup, login, logout, withdraw, resetPassword, error, clearError};
 }
