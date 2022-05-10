@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ProfilePicture from '../components/ProfilePicture';
 import {useFriends} from '../hooks/useFriends';
 import {useTimeline} from '../hooks/useTimeline';
+import ReadOnlyInput from '../components/ReadOnlyInput';
 
 const Page = styled.div`
   background: #E5E5E5;
@@ -33,6 +34,7 @@ const Header = styled.div`
 
 const Main = styled.main`
   height: 100%;
+  padding: 0 16px;
 `;
 
 const Title = styled.p`
@@ -44,7 +46,8 @@ const Title = styled.p`
 const Id = styled.p`
   font-family: 'Suez One', serif;
   font-size: 30px;
-  margin: 4px 0 3px;
+  margin: 0;
+  margin-top: 10px;
 `;
 
 const Email = styled.p`
@@ -69,22 +72,21 @@ const P = styled.p`
 const Line = styled.div`
   height: 27px;
   border-left: 0.5px solid #BDBDBD;
-  margin: 20px;
+  margin: 0 20px;
 `;
 
 const Wrapper = styled.div`
-  // background: yellow;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 5px;
 `;
 
 const View = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 28px 0;
-  // background: red;
+  padding: 28px 0 24px;
 `;
 
 export default function ProfilePage() {
@@ -116,6 +118,10 @@ export default function ProfilePage() {
             </div>
           </Wrapper>
         </View>
+
+        <ReadOnlyInput label="사용자 이름" content={user?.name} />
+        <ReadOnlyInput label="이메일 주소" content={user?.email} />
+        <ReadOnlyInput label="생년월일" content={user?.birthday} />
       </Main>
     </Page>
   );
