@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import ProfileUploader from '../components/ProfileUploader';
-import Button from '../components/common/Button';
+import RoundButton from '../components/common/RoundButton';
 import {compress} from '../utils/compress';
 import {useStorage} from '../hooks/useStorage';
 import {getURL} from '../firebase/storage';
@@ -72,7 +72,7 @@ export default function ProfilePhotoPage() {
             친구와의 추억을 공유해보세요.
           </P>
         </Wrapper>
-        <Button type="submit" value="시작하기" />
+        <RoundButton type="submit" value="시작하기" />
       </Form>
     </Page>
   );
