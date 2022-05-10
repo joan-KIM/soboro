@@ -11,6 +11,7 @@ import {ReactComponent as UserPlus} from '../../assets/user-plus.svg';
 import {ReactComponent as User} from '../../assets/user.svg';
 import {ReactComponent as ProfileUpload} from '../../assets/profile-upload.svg';
 import {ReactComponent as Profile} from '../../assets/profile.svg';
+import {ReactComponent as AcitveProfile} from '../../assets/profile_active.svg';
 
 export const ICON_TYPE = {
   CLEAR: 'clear',
@@ -24,6 +25,7 @@ export const ICON_TYPE = {
   USER_PLUS: 'user-plus',
   PROFILE_UPLOAD: 'profile-upload',
   PROFILE: 'profile',
+  ACTIVE_PROFILE: 'active-profile',
 };
 
 const Icon = ({type, size = 16, color = 'black', onClick}) => {
@@ -59,6 +61,9 @@ const Icon = ({type, size = 16, color = 'black', onClick}) => {
   }
   if (type === ICON_TYPE.PROFILE) {
     return <Profile width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.ACTIVE_PROFILE) {
+    return <AcitveProfile width={size} height={size} fill={color} onClick={onClick} />;
   }
 
   return null;
