@@ -11,7 +11,6 @@ import Icon, {ICON_TYPE} from '../components/common/Icon';
 
 const Page = styled.div`
   background: #E5E5E5;
-  height: 100vh; 
 `;
 
 const Header = styled.div`
@@ -35,8 +34,7 @@ const Header = styled.div`
 `;
 
 const Main = styled.main`
-  height: 100%;
-  padding: 0 16px;
+  padding: 0 16px 60px;
 `;
 
 const Title = styled.p`
