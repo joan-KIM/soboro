@@ -6,12 +6,14 @@ import styled from 'styled-components';
 const Nav = styled.ul`
   width: 100%;
   height: 49px;
-  // background: yellow;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
+  position: fixed;
+  bottom: 0;
 `;
 
 const List = styled.li`
