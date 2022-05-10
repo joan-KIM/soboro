@@ -34,9 +34,7 @@ export default function Navigation() {
   return (
     <Nav>
       <List>
-        <NavLink to="/profile" className={({isActive}) => (isActive ? 'active' : '')}>
-          <Icon type={ICON_TYPE.PROFILE} size={38} />
-        </NavLink>
+        <NavLink to="/profile"><Icon type={ICON_TYPE.PROFILE} size={38} /></NavLink>
       </List>
       <List>
         <NavLink to="/"><Icon type={ICON_TYPE.HOME} size={32} /></NavLink>
