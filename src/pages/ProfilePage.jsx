@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
 import styled from 'styled-components';
+import ProfilePicture from '../components/ProfilePicture';
 
 const Page = styled.div`
   background: #E5E5E5;
@@ -41,7 +42,7 @@ export default function ProfilePage() {
         <Link to="/profile/edit">수정</Link>
       </Header>
       <div>
-        프로필 컴포넌트
+        <ProfilePicture />
         <p>{user?.name}</p>
         <p>{user?.email}</p>
         <div>
