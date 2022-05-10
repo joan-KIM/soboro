@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Navigation from '../components/common/Navigation';
 // import {useAuth} from '../hooks/useAuth';
 // import {useTimeline} from '../hooks/useTimeline';
 
@@ -23,8 +22,6 @@ export default function TimelinePage() {
           <Link to="/notifications">알림 페이지</Link>
         </li>
       </ul>
-
-      <Navigation />
     </div>
   );
 }

@@ -2,11 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
 import styled from 'styled-components';
-import Navigation from '../components/common/Navigation';
 
 const Page = styled.div`
   background: #E5E5E5;
-  height: 100vh;
 `;
 
 export default function ProfilePage() {
@@ -24,8 +22,6 @@ export default function ProfilePage() {
         </li>
         <button onClick={() => logout()}>로그아웃</button>
       </ul>
-
-      <Navigation />
     </Page>
   );
 }
