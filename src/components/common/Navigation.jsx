@@ -23,27 +23,41 @@ const List = styled.li`
     display: flex;
     justify-content: center;
   }
-
-  .active svg{
-    display: block;
-    fill: #FFD12D;
-  }
 `;
 
 export default function Navigation() {
   return (
     <Nav>
       <List>
-        <NavLink to="/profile"><Icon type={ICON_TYPE.PROFILE} size={38} /></NavLink>
+        <NavLink to="/profile">
+          {({isActive}) => (
+            isActive ? <Icon type={ICON_TYPE.ACTIVE_PROFILE} size={38} /> :
+            <Icon type={ICON_TYPE.PROFILE} size={38} />
+          )}
+        </NavLink>
       </List>
       <List>
-        <NavLink to="/"><Icon type={ICON_TYPE.HOME} size={32} /></NavLink>
+        <NavLink to="/">
+          {({isActive}) => (
+            isActive ? <Icon type={ICON_TYPE.ACTIVE_HOME} size={32} /> :
+            <Icon type={ICON_TYPE.HOME} size={32} />
+          )}
+        </NavLink>
       </List>
       <List>
-        <NavLink to="/event/create"><Icon type={ICON_TYPE.UPLOAD} size={32} /></NavLink>
+        <NavLink to="/event/create">
+          {({isActive}) => (
+            isActive ? <Icon type={ICON_TYPE.ACTIVE_UPLOAD} size={32} /> :
+            <Icon type={ICON_TYPE.UPLOAD} size={32} />
+          )}
+        </NavLink>
       </List>
       <List>
-        <NavLink to="/friends/search"><Icon type={ICON_TYPE.USER_PLUS} size={32} /></NavLink>
+        <NavLink to="/friends/search">
+          {({isActive}) => (
+            <Icon type={ICON_TYPE.USER_PLUS} size={32} color={isActive ? '#FFD12D' : 'black'} />
+          )}
+        </NavLink>
       </List>
     </Nav>
   );
