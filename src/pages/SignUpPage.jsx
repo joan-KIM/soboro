@@ -7,7 +7,7 @@ import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByEmail, findUserByName} from '../firebase/firestore';
 import {useAuth} from '../hooks/useAuth';
-import Button from '../components/common/Button';
+import RoundButton from '../components/common/RoundButton';
 
 const Page = styled.div`
   padding: 17px;
@@ -181,7 +181,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
-        <Button type="submit" value="회원가입" disabled={!isValid} />
+        <RoundButton type="submit" value="회원가입" disabled={!isValid} />
       </Form>
     </Page>
   );

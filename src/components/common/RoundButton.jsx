@@ -20,13 +20,13 @@ const Btn = styled.input`
   }
 `;
 
-export default function Button({type, value, disabled}) {
+export default function RoundButton({type, value, disabled}) {
   return (
     <Btn type={type} value={value} disabled={disabled ? true : false} />
   );
 }
 
-Button.propTypes = {
+RoundButton.propTypes = {
   type: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

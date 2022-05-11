@@ -24,7 +24,7 @@ const AuthProvider = ({children}) => {
     setIsAuth(!!sessionStorage.getItem('refresh_token'));
   }, [authInfo]);
 
-  return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth}}>
+  return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth, setAuthInfo}}>
     {children}
   </AuthContext.Provider>;
 };

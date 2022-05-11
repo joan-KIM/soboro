@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 import LoginInput from '../components/LoginInput';
 import {useForm} from 'react-hook-form';
-import Button from '../components/common/Button';
+import RoundButton from '../components/common/RoundButton';
 import styled from 'styled-components';
 import {useAuth} from '../hooks/useAuth';
 import {errorMessage} from '../constants/error';
@@ -57,7 +57,7 @@ export default function ResetPasswordPage() {
           resetField={resetField}
           placeholder="이메일 주소"
         />
-        <Button type="submit" value="확인" />
+        <RoundButton type="submit" value="확인" />
       </Form>
     </Page>
   );

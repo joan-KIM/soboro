@@ -4,7 +4,7 @@ import LoginInput from '../components/LoginInput';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import {ReactComponent as Logo} from '../assets/logo.svg';
-import Button from '../components/common/Button';
+import RoundButton from '../components/common/RoundButton';
 import {useAuth} from '../hooks/useAuth';
 import {errorMessage} from '../constants/error';
 
@@ -53,14 +53,14 @@ const Form = styled.form`
 
 export default function LoginPage() {
   const {resetField, register, handleSubmit} = useForm();
-  const {login, isAuth} = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async ({email, password}) => {
     const error = await login(email, password);
     if (error) {
       alert(errorMessage[error]);
-    } else if (isAuth) {
+    } else {
       navigate('/');
     }
   };
@@ -87,8 +87,8 @@ export default function LoginPage() {
           resetField={resetField}
           placeholder="비밀번호"
         />
-        <Button type="submit" value="로그인" />
-        <Link to="/account/signup"><Button type="button" value="회원가입" /></Link>
+        <RoundButton type="submit" value="로그인" />
+        <Link to="/account/signup"><RoundButton type="button" value="회원가입" /></Link>
         <Link to="/account/resetpassword">비밀번호를 잊으셨나요?</Link>
       </Form>
     </Page>

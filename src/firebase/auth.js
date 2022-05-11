@@ -22,6 +22,7 @@ export const login = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
         sessionStorage.setItem('refresh_token', response._tokenResponse.refreshToken);
+        return response.user;
       });
 };
 
