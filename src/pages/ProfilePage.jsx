@@ -98,12 +98,8 @@ export default function ProfilePage() {
   const friends = useFriends();
   const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
-  let birthday = '';
-
-  if (user) {
-    const bday = user.birthday;
-    birthday = bday.slice(0, 2) + '.' + bday.slice(2, 4) + '.' + bday.slice(4);
-  }
+  const bday = user?.birthday;
+  const birthday = bday?.slice(0, 2) + '.' + bday?.slice(2, 4) + '.' + bday?.slice(4);
 
   return (
     <Page>
