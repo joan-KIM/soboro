@@ -12,8 +12,8 @@ export const useTimeline = (user) => {
 
   const timeline = useMemo(
       () => data
-          .filter(({members}) => members.includes(user.uid) || members.every((uid) => friends.includes(uid)))
-          .filter(({isPublic}) => isPublic)
+          .filter(({isPublic, members}) => members.includes(user?.uid) || isPublic)
+          .filter(({members}) => members.every((uid) => friends.includes(uid)))
           .sort((a, b) => b.createdAt - a.createdAt)
           .map(({members, ...event}) => ({
             ...event,
@@ -24,7 +24,7 @@ export const useTimeline = (user) => {
               return friends.find(({uid}) => uid === id);
             }),
           })),
-      [data, friends],
+      [user, data, friends],
   );
   const timelineWithMe = useMemo(
       () => timeline.filter(({members}) => members.some(({uid}) => uid === user.uid)),
