@@ -12,7 +12,7 @@ export const useTimeline = (user) => {
 
   const timeline = useMemo(
       () => data
-          .filter(({members}) => friends.every(({uid}) => members.includes(uid)))
+          .filter(({members}) => members.includes(user.uid) || members.every((uid) => friends.includes(uid)))
           .filter(({isPublic}) => isPublic)
           .sort((a, b) => b.createdAt - a.createdAt)
           .map(({members, ...event}) => ({
