@@ -7,7 +7,7 @@ import Icon, {ICON_TYPE} from '../components/common/Icon';
 import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByEmail, findUserByName} from '../firebase/firestore';
 import {useAuth} from '../hooks/useAuth';
-import Button from '../components/common/Button';
+import RoundButton from '../components/common/RoundButton';
 
 const Page = styled.div`
   padding: 17px;
@@ -40,14 +40,14 @@ const Form = styled.form`
 
 export default function SignUpPage() {
   const {register, handleSubmit, resetField, watch, trigger,
-    formState: {errors, dirtyFields},
+    formState: {errors, dirtyFields, isValid},
   } = useForm({mode: 'onBlur', reValidateMode: 'onBlur'});
   const privateChecked = watch('private');
   const shareChecked = watch('share');
   const recordChecked = watch('record');
   const password = watch('password');
   const navigate = useNavigate();
-  const {signup} = useAuth();
+  const {signup, login} = useAuth();
 
   const onSubmit = async (data) => {
     const isValid = await trigger();
@@ -59,7 +59,8 @@ export default function SignUpPage() {
         birthday: data.birthday,
       };
       await signup(user);
-      navigate('/account/login');
+      await login(user.email, user.password);
+      navigate('/account/photo');
     }
   };
 
@@ -180,7 +181,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
-        <Button type="submit" value="회원가입" />
+        <RoundButton type="submit" value="회원가입" disabled={!isValid} />
       </Form>
     </Page>
   );

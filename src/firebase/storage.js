@@ -1,10 +1,14 @@
-import {getStorage, ref, uploadBytes} from 'firebase/storage';
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 import app from './firebase';
 
 const storage = getStorage(app);
 
-export const uploadFile = (eventId, file) => {
-  // TODO: 파일 경로, 파일 확장자 지정
-  const imageRef = ref(storage, `${eventId}/${file.name}.${file.ext}`);
-  return uploadBytes(imageRef, file);
+export const uploadFile = (id, file) => {
+  const imageRef = ref(storage, `${id}/${file.name}`);
+  return uploadBytesResumable(imageRef, file);
+};
+
+export const getURL = (id, fileName) => {
+  const imageRef = ref(storage, `${id}/${fileName}`);
+  return getDownloadURL(imageRef);
 };

@@ -10,15 +10,6 @@ export default function TimelinePage() {
           <Link to="/search">이벤트 검색하기</Link>
         </li>
         <li>
-          <Link to="/friends/search">팔로우 추가</Link>
-        </li>
-        <li>
-          <Link to="/profile">마이페이지</Link>
-        </li>
-        <li>
-          <Link to="/event/create">이벤트 등록하기</Link>
-        </li>
-        <li>
           <Link to="/event">이벤트 상세</Link>
         </li>
         <li>

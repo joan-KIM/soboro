@@ -14,9 +14,11 @@ import EditEventPage from './pages/EditEventPage';
 import EditProfilePage from './pages/EditProfilePage';
 import FriendsPage from './pages/FriendsPage';
 import RequiredAuth from './components/RequiredAuth';
-import {AuthProvider} from './hooks/useAuth';
+import AuthProvider from './hooks/AuthProvider';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePhotoPage from './pages/ProfilePhotoPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import Layout from './components/common/Layout';
 
 const queryClient = new QueryClient();
 
@@ -26,13 +28,31 @@ function App() {
       <AuthProvider>
         <div className="App">
           <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={
+                <RequiredAuth to="/account/login">
+                  <TimelinePage />
+                </RequiredAuth>}
+              />
+              <Route path="/profile" element={
+                <RequiredAuth to="/account/login">
+                  <ProfilePage />
+                </RequiredAuth>}
+              />
+              <Route path="/friends/search" element={
+                <RequiredAuth to="/account/login">
+                  <SearchFriendsPage />
+                </RequiredAuth>}
+              />
+              <Route path="/event/create" element={
+                <RequiredAuth to="/account/login">
+                  <CreateEventPage />
+                </RequiredAuth>}
+              />
+            </Route>
             <Route path="/account/login" element={<LoginPage />} />
             <Route path="/account/signup" element={<SignUpPage />} />
-            <Route path="/" element={
-              <RequiredAuth to="/account/login">
-                <TimelinePage />
-              </RequiredAuth>}
-            />
+            <Route path="/account/resetpassword" element={<ResetPasswordPage />} />
             <Route path="/account/photo" element={
               <RequiredAuth to="/account/login">
                 <ProfilePhotoPage />
@@ -41,11 +61,6 @@ function App() {
             <Route path="/search" element={
               <RequiredAuth to="/account/login">
                 <SearchEventPage />
-              </RequiredAuth>}
-            />
-            <Route path="/profile" element={
-              <RequiredAuth to="/account/login">
-                <ProfilePage />
               </RequiredAuth>}
             />
             <Route path="/profile/edit" element={
@@ -58,11 +73,6 @@ function App() {
                 <FriendsPage />
               </RequiredAuth>}
             />
-            <Route path="/friends/search" element={
-              <RequiredAuth to="/account/login">
-                <SearchFriendsPage />
-              </RequiredAuth>}
-            />
             <Route path="/event" element={
               <RequiredAuth to="/account/login">
                 <EventPage />
@@ -71,11 +81,6 @@ function App() {
             <Route path="/event/edit" element={
               <RequiredAuth to="/account/login">
                 <EditEventPage />
-              </RequiredAuth>}
-            />
-            <Route path="/event/create" element={
-              <RequiredAuth to="/account/login">
-                <CreateEventPage />
               </RequiredAuth>}
             />
             <Route path="/notifications" element={
