@@ -19,7 +19,8 @@ export function useAuth() {
 
   const login = useCallback(async (email, password) => {
     try {
-      await Auth.login(email, password);
+      const result = await Auth.login(email, password);
+      context.setAuthInfo(result);
     } catch (e) {
       setError(e.message);
       return e.message;

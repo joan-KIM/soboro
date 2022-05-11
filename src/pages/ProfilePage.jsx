@@ -96,7 +96,7 @@ const Div = styled.div`
 export default function ProfilePage() {
   const {user, logout} = useAuth();
   const friends = useFriends();
-  const {timelineWithMe} = useTimeline();
+  const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
   let birthday = '';
 
