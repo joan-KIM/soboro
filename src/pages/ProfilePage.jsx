@@ -98,8 +98,7 @@ export default function ProfilePage() {
   const friends = useFriends();
   const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
-  const bday = user?.birthday;
-  const birthday = bday?.slice(0, 2) + '.' + bday?.slice(2, 4) + '.' + bday?.slice(4);
+  const birthday = (user?.birthday || '').replace(/^(\d{2})(\d{2})(\d{2})$/, '$1.$2.$3');
 
   return (
     <Page>
