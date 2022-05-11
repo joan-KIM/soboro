@@ -1,11 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useAuth} from '../hooks/useAuth';
+import styled from 'styled-components';
+
+const Page = styled.div`
+  background: #E5E5E5;
+`;
 
 export default function ProfilePage() {
   const {logout} = useAuth();
   return (
-    <div>
+    <Page>
       <h1>마이페이지</h1>
       <Link to="/">뒤로가기</Link>
       <ul>
@@ -17,6 +22,6 @@ export default function ProfilePage() {
         </li>
         <button onClick={() => logout()}>로그아웃</button>
       </ul>
-    </div>
+    </Page>
   );
 }
