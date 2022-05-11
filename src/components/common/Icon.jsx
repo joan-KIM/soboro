@@ -13,6 +13,8 @@ import {ReactComponent as ProfileUpload} from '../../assets/profile-upload.svg';
 import {ReactComponent as Profile} from '../../assets/profile.svg';
 import {ReactComponent as AcitveProfile} from '../../assets/profile_active.svg';
 import {ReactComponent as Forward} from '../../assets/forward.svg';
+import {ReactComponent as AcitveHome} from '../../assets/home_active.svg';
+import {ReactComponent as AcitveUpload} from '../../assets/upload_active.svg';
 
 export const ICON_TYPE = {
   CLEAR: 'clear',
@@ -28,6 +30,8 @@ export const ICON_TYPE = {
   PROFILE: 'profile',
   ACTIVE_PROFILE: 'active-profile',
   FORWARD: 'forward',
+  ACTIVE_HOME: 'active-home',
+  ACTIVE_UPLOAD: 'active-upload',
 };
 
 const Icon = ({type, size = 16, color = 'black', onClick}) => {
@@ -69,6 +73,12 @@ const Icon = ({type, size = 16, color = 'black', onClick}) => {
   }
   if (type === ICON_TYPE.FORWARD) {
     return <Forward width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.ACTIVE_HOME) {
+    return <AcitveHome width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.ACTIVE_UPLOAD) {
+    return <AcitveUpload width={size} height={size} fill={color} onClick={onClick} />;
   }
 
   return null;
