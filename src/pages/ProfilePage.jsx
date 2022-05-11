@@ -98,8 +98,12 @@ export default function ProfilePage() {
   const friends = useFriends();
   const {timelineWithMe} = useTimeline();
   const navigate = useNavigate();
-  const bday = user?.birthday;
-  const birthday = bday.slice(0, 2) + '.' + bday.slice(2, 4) + '.' + bday.slice(4);
+  let birthday = '';
+
+  if (user) {
+    const bday = user.birthday;
+    birthday = bday.slice(0, 2) + '.' + bday.slice(2, 4) + '.' + bday.slice(4);
+  }
 
   return (
     <Page>
@@ -135,7 +139,7 @@ export default function ProfilePage() {
             <Icon type={ICON_TYPE.FORWARD} color="#707070" />
           </BlockLevelButton>
         </Div>
-        <BlockLevelButton value="로그아웃" color="#4886FF" onClick={() => logout()} />
+        <BlockLevelButton value="로그아웃" color="#4886FF" onClick={logout} />
         <BlockLevelButton value="회원탈퇴" color="#FF5065" />
       </Main>
     </Page>
