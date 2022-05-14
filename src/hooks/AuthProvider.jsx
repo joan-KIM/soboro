@@ -8,11 +8,10 @@ import * as Auth from '../firebase/auth';
 export const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-  console.log('provider');
   const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('refresh_token'));
   const [authInfo, setAuthInfo] = useState();
   const [error, setError] = useState();
-  const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid));
+  const {data, refetch} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid));
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(Auth.auth, (auth) => {
@@ -26,7 +25,7 @@ const AuthProvider = ({children}) => {
     return () => unsubscribe();
   }, []);
 
-  return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth, setAuthInfo}}>
+  return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth, refetch}}>
     {children}
   </AuthContext.Provider>;
 };
