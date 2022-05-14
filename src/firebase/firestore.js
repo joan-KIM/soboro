@@ -105,6 +105,9 @@ export const getUserData = async (ref) => {
 };
 
 export const getUser = (uid) => {
+  if (!uid) {
+    return null;
+  }
   const ref = getUserRef(uid);
   return getUserData(ref);
 };

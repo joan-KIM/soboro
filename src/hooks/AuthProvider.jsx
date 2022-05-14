@@ -8,21 +8,23 @@ import * as Auth from '../firebase/auth';
 export const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-  const [authInfo, setAuthInfo] = useState();
+  console.log('provider');
   const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('refresh_token'));
+  const [authInfo, setAuthInfo] = useState();
   const [error, setError] = useState();
-  const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid), {
-    enabled: !!authInfo,
-  });
+  const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid));
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(Auth.auth, setAuthInfo, setError);
+    const unsubscribe = onAuthStateChanged(Auth.auth, (auth) => {
+      if (auth) {
+        setIsAuth(true);
+      } else {
+        setIsAuth(false);
+      }
+      setAuthInfo(auth);
+    }, setError);
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    setIsAuth(!!sessionStorage.getItem('refresh_token'));
-  }, [authInfo]);
 
   return <AuthContext.Provider value={{auth: authInfo, user: data, error, isAuth, setAuthInfo}}>
     {children}
