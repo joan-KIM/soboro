@@ -1,14 +1,18 @@
 import React, {useRef} from 'react';
 import {useForm} from 'react-hook-form';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import ProfilePictureEditor from '../components/ProfilePictureEditor';
 import SignUpInput from '../components/SignUpInput';
 import {findUserByName} from '../firebase/firestore';
 import {useUser} from '../hooks/useUser';
+import {useStorage} from '../hooks/useStorage';
+import {compress} from '../utils/compress';
 
 const Page = styled.div`
   background: #F4F4F4;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 const Header = styled.div`
@@ -49,7 +53,7 @@ const SaveBtn = styled.button`
 `;
 
 const Main = styled.main`
-  height: 100vh;
+  height: 100%;
   padding: 16px;
 `;
 
@@ -57,16 +61,42 @@ const Form = styled.form`
   & > div{
     margin-bottom: 14px;
   }
+
+  & > div:first-child{
+    margin: 12px auto 26px;
+  }
 `;
 
 export default function EditProfilePage() {
   const {register, handleSubmit, resetField,
-    formState: {errors, dirtyFields}} = useForm({mode: 'onBlur', reValidateMode: 'onBlur'});
-  const {user} = useUser();
+    formState: {errors, dirtyFields, isValid}} = useForm({mode: 'onBlur', reValidateMode: 'onBlur'});
+  const {user, updateProfile} = useUser();
+  const {upload} = useStorage(user?.uid);
   const ref = useRef();
-  console.log(user);
-  const onSubmit = () => {
+  const navigate = useNavigate();
 
+  const onSubmit = async (data) => {
+    const [file] = ref.current.files;
+    let url = '';
+
+    if (file) {
+      const compressedFile = await compress(file, 200, 200);
+      url = await upload(compressedFile);
+    } else {
+      url = user.photoUrl;
+    };
+
+    const editedProfile = {
+      ...user,
+      name: data.username,
+      birthday: data.birthday,
+      photoUrl: url,
+    };
+
+    if (isValid) {
+      await updateProfile(editedProfile);
+      navigate('/profile');
+    }
   };
 
   return (
@@ -74,11 +104,11 @@ export default function EditProfilePage() {
       <Header>
         <Link to="/profile">취소</Link>
         <Title>프로필</Title>
-        <SaveBtn type="button">완료</SaveBtn>
+        <SaveBtn type="submit" form="editedProfile">완료</SaveBtn>
       </Header>
 
       <Main>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} id="editedProfile">
           <ProfilePictureEditor ref={ref} />
           <SignUpInput
             required
@@ -90,8 +120,8 @@ export default function EditProfilePage() {
             validate={{
               pattern: (v) => /^[a-z0-9._]{5,20}$/.test(v) || '5~20자의 영문 소문자, 숫자와 특수기호(_),(.)만 사용 가능합니다.',
               isUnique: async (v) => {
-                const user = await findUserByName(v);
-                if (user) {
+                const existUser = await findUserByName(v);
+                if (v !== user.name && existUser) {
                   return '중복된 사용자 이름 입니다.';
                 }
                 return true;
