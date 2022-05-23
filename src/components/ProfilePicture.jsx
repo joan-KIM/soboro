@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const Div = styled.div`
     background: #FFFFFF;
-    width: 111px;
-    height: 111px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
 `;

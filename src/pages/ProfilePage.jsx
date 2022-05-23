@@ -10,7 +10,7 @@ import BlockLevelButton from '../components/common/BlockLevelButton';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
 
 const Page = styled.div`
-  background: #E5E5E5;
+  background: #F4F4F4;
 `;
 
 const Header = styled.div`
