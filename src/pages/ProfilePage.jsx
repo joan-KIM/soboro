@@ -8,6 +8,7 @@ import {useTimeline} from '../hooks/useTimeline';
 import ReadOnlyInput from '../components/ReadOnlyInput';
 import BlockLevelButton from '../components/common/BlockLevelButton';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
+import {resetPassword} from '../firebase/auth';
 
 const Page = styled.div`
   background: #F4F4F4;
@@ -100,6 +101,13 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const birthday = (user?.birthday || '').replace(/^(\d{2})(\d{2})(\d{2})$/, '$1.$2.$3');
 
+  console.log(user);
+
+  const onClick = () => {
+    resetPassword(user.email);
+    alert('이메일로 비밀번호 재설정 링크가 전송되었습니다.');
+  };
+
   return (
     <Page>
       <Header>
@@ -134,6 +142,7 @@ export default function ProfilePage() {
             <Icon type={ICON_TYPE.FORWARD} color="#707070" />
           </BlockLevelButton>
         </Div>
+        <BlockLevelButton value="비밀번호 재설정" color="#4886FF" onClick={onClick} />
         <BlockLevelButton value="로그아웃" color="#4886FF" onClick={logout} />
         <BlockLevelButton value="회원탈퇴" color="#FF5065" />
       </Main>
