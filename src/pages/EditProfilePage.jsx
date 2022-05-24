@@ -68,9 +68,15 @@ const Form = styled.form`
 `;
 
 export default function EditProfilePage() {
-  const {register, handleSubmit, resetField,
-    formState: {errors, dirtyFields, isValid}} = useForm({mode: 'onBlur', reValidateMode: 'onBlur'});
   const {user, updateProfile} = useUser();
+  const {register, handleSubmit, resetField,
+    formState: {errors, dirtyFields, isValid}} = useForm({
+    mode: 'onBlur', reValidateMode: 'onBlur',
+    defaultValues: {
+      username: user?.name,
+      birthday: user?.birthday,
+    },
+  });
   const {upload} = useStorage(user?.uid);
   const ref = useRef();
   const navigate = useNavigate();
