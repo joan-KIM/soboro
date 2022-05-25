@@ -105,11 +105,17 @@ export const getUserData = async (ref) => {
 };
 
 export const getUser = (uid) => {
+  if (!uid) {
+    return null;
+  }
   const ref = getUserRef(uid);
   return getUserData(ref);
 };
 
 export const findUserByName = async (name) => {
+  if (!name) {
+    return null;
+  }
   const querySnapshot = await getDocs(query(usersRef, where('name', '==', name)));
   let user = null;
   querySnapshot.forEach((doc) => {
@@ -127,20 +133,21 @@ export const findUserByEmail = async (email) => {
   return user;
 };
 
-export const getFriends = async (user) => {
-  return Promise.all(user.friend.list.map((friend) => getUser(friend.uid)));
+export const getUsers = (uids = []) => {
+  return Promise.all(uids.map(getUser));
 };
 
 // 친구 요청
 export const requestFriend = (user, uid) => {
   runTransaction(db, async (transaction) => {
+    console.log(transaction);
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
-    transaction.updateDoc(userRef, {
+    transaction.update(userRef, {
       'friend.requesting': arrayUnion(uid),
     });
-    transaction.updateDoc(friendRef, {
+    transaction.update(friendRef, {
       'friend.requested': arrayUnion(user.uid),
     });
   });
@@ -152,11 +159,11 @@ export const approveFriend = (user, uid) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
-    transaction.updateDoc(userRef, {
+    transaction.update(userRef, {
       'friend.list': arrayUnion(uid),
       'friend.requested': arrayRemove(uid),
     });
-    transaction.updateDoc(friendRef, {
+    transaction.update(friendRef, {
       'friend.list': arrayUnion(user.uid),
       'friend.requesting': arrayRemove(user.uid),
     });
@@ -169,10 +176,10 @@ export const cancelRequestFriend = (user, uid) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
-    transaction.updateDoc(userRef, {
+    transaction.update(userRef, {
       'friend.requesting': arrayRemove(uid),
     });
-    transaction.updateDoc(friendRef, {
+    transaction.update(friendRef, {
       'friend.requested': arrayRemove(user.uid),
     });
   });
@@ -184,10 +191,10 @@ export const rejectFriend = (user, uid) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
-    transaction.updateDoc(userRef, {
+    transaction.update(userRef, {
       'friend.requested': arrayRemove(uid),
     });
-    transaction.updateDoc(friendRef, {
+    transaction.update(friendRef, {
       'friend.requesting': arrayRemove(user.uid),
     });
   });
@@ -199,10 +206,10 @@ export const removeFriend = (user, uid) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
-    transaction.updateDoc(userRef, {
+    transaction.update(userRef, {
       'friend.list': arrayRemove(uid),
     });
-    transaction.updateDoc(friendRef, {
+    transaction.update(friendRef, {
       'friend.list': arrayRemove(user.uid),
     });
   });

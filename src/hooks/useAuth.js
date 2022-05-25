@@ -11,6 +11,7 @@ export function useAuth() {
   const signup = useCallback(async (user) => {
     try {
       await Auth.createUser(user);
+      return await login(user.email, user.password);
     } catch (e) {
       setError(e.message);
       return e.message;
@@ -19,8 +20,7 @@ export function useAuth() {
 
   const login = useCallback(async (email, password) => {
     try {
-      const result = await Auth.login(email, password);
-      context.setAuthInfo(result);
+      await Auth.login(email, password);
     } catch (e) {
       setError(e.message);
       return e.message;
