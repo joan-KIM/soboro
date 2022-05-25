@@ -3,13 +3,17 @@ import {updateUser} from '../firebase/firestore';
 import {AuthContext} from './AuthProvider';
 
 export function useUser() {
-  const {user} = useContext(AuthContext);
+  const {user, refetch} = useContext(AuthContext);
+
+  const updateProfile = useCallback(async (profile) => {
+    const result = await updateUser({...user, ...profile});
+    refetch();
+    return result;
+  }, [user, refetch]);
+
   const updatePhotoUrl = useCallback((url) => {
-    return updateUser({...user, photoUrl: url});
-  }, [user]);
-  const updateProfile = useCallback((profile) => {
-    return updateUser(profile);
-  }, [user]);
+    return updateProfile({photoUrl: url});
+  }, [updateProfile]);
 
   return {user, updatePhotoUrl, updateProfile};
 }
