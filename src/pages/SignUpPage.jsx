@@ -8,6 +8,7 @@ import CheckboxInput from '../components/common/CheckboxInput';
 import {findUserByEmail, findUserByName} from '../firebase/firestore';
 import {useAuth} from '../hooks/useAuth';
 import RoundButton from '../components/common/RoundButton';
+import {errorMessage} from '../constants/error';
 
 const Page = styled.div`
   padding: 17px;

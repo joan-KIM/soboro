@@ -96,7 +96,7 @@ const Div = styled.div`
 
 export default function ProfilePage() {
   const {user, logout, withdraw} = useAuth();
-  const friends = useFriends();
+  const {friends} = useFriends();
   const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
   const birthday = (user?.birthday || '').replace(/^(\d{2})(\d{2})(\d{2})$/, '$1.$2.$3');

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useForm} from 'react-hook-form';
 import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
@@ -69,17 +69,17 @@ const Form = styled.form`
 
 export default function EditProfilePage() {
   const {user, updateProfile} = useUser();
-  const {register, handleSubmit, resetField,
+  const {register, handleSubmit, resetField, setValue,
     formState: {errors, dirtyFields, isValid}} = useForm({
-    mode: 'onBlur', reValidateMode: 'onBlur',
-    defaultValues: {
-      username: user?.name,
-      birthday: user?.birthday,
-    },
-  });
+    mode: 'onBlur', reValidateMode: 'onBlur'});
   const {upload} = useStorage(user?.uid);
   const ref = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setValue('username', user?.name, {shouldDirty: false} );
+    setValue('birthday', user?.birthday, {shouldDirty: false} );
+  }, []);
 
   const onSubmit = async (data) => {
     const [file] = ref.current.files;
