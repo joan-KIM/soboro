@@ -181,6 +181,7 @@ export default function SignUpPage() {
             />
           </li>
         </CheckList>
+        {/* <p>{JSON.stringify(isValid)}</p> */}
         <RoundButton type="submit" value="회원가입" disabled={!isValid} />
       </Form>
     </Page>

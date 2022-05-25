@@ -95,7 +95,7 @@ const Div = styled.div`
 `;
 
 export default function ProfilePage() {
-  const {user, logout} = useAuth();
+  const {user, logout, withdraw} = useAuth();
   const friends = useFriends();
   const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
@@ -103,9 +103,17 @@ export default function ProfilePage() {
 
   console.log(user);
 
-  const onClick = () => {
+  const resetPw = () => {
     resetPassword(user.email);
     alert('이메일로 비밀번호 재설정 링크가 전송되었습니다.');
+  };
+
+  const deleteAccount = async () => {
+    if (confirm('정말 회원탈퇴 하시겠습니까? 쌓아온 모든 추억이 사라집니다.')) {
+      await withdraw(user);
+    } else {
+      return;
+    }
   };
 
   return (
@@ -142,9 +150,9 @@ export default function ProfilePage() {
             <Icon type={ICON_TYPE.FORWARD} color="#707070" />
           </BlockLevelButton>
         </Div>
-        <BlockLevelButton value="비밀번호 재설정" color="#4886FF" onClick={onClick} />
+        <BlockLevelButton value="비밀번호 재설정" color="#4886FF" onClick={resetPw} />
         <BlockLevelButton value="로그아웃" color="#4886FF" onClick={logout} />
-        <BlockLevelButton value="회원탈퇴" color="#FF5065" />
+        <BlockLevelButton value="회원탈퇴" color="#FF5065" onClick={deleteAccount} />
       </Main>
     </Page>
   );

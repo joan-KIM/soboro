@@ -40,7 +40,7 @@ export function useAuth() {
     }
   }, []);
 
-  const withdraw = useCallback(() => {
+  const withdraw = useCallback((user) => {
     Auth.withdraw(user);
   }, []);
 
