@@ -115,7 +115,9 @@ export default function SignUpInput({
               placeholder={placeholder}
               {...register(name, {required, validate})}
             />
-            <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => reset(name, {keepDirty: true})} />
+            <Icon type={ICON_TYPE.CLEAR} size={13} onClick={() => reset(
+                name, {defaultValue: '', keepDirty: true})
+            } />
           </InputGroup>
         </Label>
       </InputContainer>
