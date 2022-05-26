@@ -1,6 +1,7 @@
 import React, {useState, forwardRef} from 'react';
 import styled from 'styled-components';
 import Icon, {ICON_TYPE} from './common/Icon';
+import {fileTypes} from '../constants/filetype';
 
 const Div = styled.div`
   width: 100%;
@@ -25,12 +26,6 @@ const Label = styled.label`
   flex-direction: column;
   align-items: center;
 `;
-
-const fileTypes = [
-  'image/png',
-  'image/jpeg',
-  'image/svg',
-];
 
 const validFileType = (file) => {
   return fileTypes.includes(file.type);

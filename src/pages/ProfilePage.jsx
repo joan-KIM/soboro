@@ -8,9 +8,10 @@ import {useTimeline} from '../hooks/useTimeline';
 import ReadOnlyInput from '../components/ReadOnlyInput';
 import BlockLevelButton from '../components/common/BlockLevelButton';
 import Icon, {ICON_TYPE} from '../components/common/Icon';
+import {resetPassword} from '../firebase/auth';
 
 const Page = styled.div`
-  background: #E5E5E5;
+  background: #F4F4F4;
 `;
 
 const Header = styled.div`
@@ -94,11 +95,32 @@ const Div = styled.div`
 `;
 
 export default function ProfilePage() {
-  const {user, logout} = useAuth();
-  const friends = useFriends();
+  const {user, logout, withdraw} = useAuth();
+  const {friends} = useFriends();
   const {timelineWithMe} = useTimeline(user);
   const navigate = useNavigate();
   const birthday = (user?.birthday || '').replace(/^(\d{2})(\d{2})(\d{2})$/, '$1.$2.$3');
+
+  const resetPw = () => {
+    resetPassword(user.email);
+    alert('이메일로 비밀번호 재설정 링크가 전송되었습니다.');
+  };
+
+  const signout = () => {
+    if (confirm('로그아웃 하시겠습니까?')) {
+      logout();
+    } else {
+      return;
+    }
+  };
+
+  const deleteAccount = async () => {
+    if (confirm('정말 회원탈퇴 하시겠습니까?\n쌓아온 모든 추억이 사라집니다.')) {
+      await withdraw(user);
+    } else {
+      return;
+    }
+  };
 
   return (
     <Page>
@@ -134,8 +156,9 @@ export default function ProfilePage() {
             <Icon type={ICON_TYPE.FORWARD} color="#707070" />
           </BlockLevelButton>
         </Div>
-        <BlockLevelButton value="로그아웃" color="#4886FF" onClick={logout} />
-        <BlockLevelButton value="회원탈퇴" color="#FF5065" />
+        <BlockLevelButton value="비밀번호 재설정" color="#4886FF" onClick={resetPw} />
+        <BlockLevelButton value="로그아웃" color="#4886FF" onClick={signout} />
+        <BlockLevelButton value="회원탈퇴" color="#FF5065" onClick={deleteAccount} />
       </Main>
     </Page>
   );

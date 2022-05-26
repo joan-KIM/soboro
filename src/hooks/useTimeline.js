@@ -8,7 +8,7 @@ export const useTimeline = (user) => {
     initialData: [],
     placeholderData: [],
   });
-  const friends = useFriends(user);
+  const {friends} = useFriends(user);
 
   const timeline = useMemo(
       () => data
