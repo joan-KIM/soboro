@@ -55,7 +55,8 @@ export default function Navigation() {
       <List>
         <NavLink to="/friends/search">
           {({isActive}) => (
-            <Icon type={ICON_TYPE.USER_PLUS} size={32} color={isActive ? '#FFD12D' : 'black'} />
+            isActive ? <Icon type={ICON_TYPE.ACTIVE_USER} size={32} /> :
+            <Icon type={ICON_TYPE.USER_PLUS} size={32} />
           )}
         </NavLink>
       </List>
