@@ -17,6 +17,11 @@ const Input = styled.input`
   border: none;
   outline: none;
   background: none;
+  font-size: 14px;
+
+  &::placeholder{
+    color: #636363;
+  }
 `;
 
 export default function SearchBar({placeholder}) {
