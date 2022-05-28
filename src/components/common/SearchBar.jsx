@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Icon, {ICON_TYPE} from './Icon';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
@@ -26,15 +26,27 @@ const Input = styled.input`
   }
 `;
 
-export default function SearchBar({placeholder}) {
+export default function SearchBar({placeholder, event, getValue}) {
+  const [text, setText] = useState('');
+
+  const changeHandler = (e) => {
+    setText(e.target.value);
+  };
+
+  if (event) {
+    getValue(text);
+  }
+
   return (
     <Div>
       <Icon type={ICON_TYPE.SEARCH} size={19} />
-      <Input type='text' placeholder={placeholder} />
+      <Input type='text' placeholder={placeholder} value={text} onChange={changeHandler} />
     </Div>
   );
 }
 
 SearchBar.propTypes = {
+  event: propTypes.object,
+  getValue: propTypes.func,
   placeholder: propTypes.string,
 };
