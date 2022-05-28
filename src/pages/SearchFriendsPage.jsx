@@ -1,11 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import SearchBar from '../components/common/SearchBar';
+import styled from 'styled-components';
+
+const Page = styled.div`
+  padding: 18px;
+`;
 
 export default function SearchFriendsPage() {
   return (
-    <div>
-      <h1>팔로우 검색/추가 페이지</h1>
-      <Link to="/">뒤로가기</Link>
-    </div>
+    <Page>
+      <SearchBar placeholder='사용자 아이디를 검색해보세요' />
+    </Page>
   );
 }

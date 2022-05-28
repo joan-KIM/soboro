@@ -14,6 +14,7 @@ const Nav = styled.ul`
   padding: 0;
   position: fixed;
   bottom: 0;
+  border-top: 1px solid #F4F4F4;
 `;
 
 const List = styled.li`
