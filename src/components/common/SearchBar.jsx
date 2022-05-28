@@ -9,6 +9,7 @@ const Div = styled.div`
   border-radius: 10px;
   display: flex;
   align-items: center;
+  flex: 1;
 `;
 
 const Input = styled.input`
