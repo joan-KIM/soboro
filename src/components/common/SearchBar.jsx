@@ -18,6 +18,7 @@ const Input = styled.input`
   outline: none;
   background: none;
   font-size: 14px;
+  padding: 0;
 
   &::placeholder{
     color: #636363;
@@ -27,7 +28,7 @@ const Input = styled.input`
 export default function SearchBar({placeholder}) {
   return (
     <Div>
-      <Icon type={ICON_TYPE.SEARCH} size={15} />
+      <Icon type={ICON_TYPE.SEARCH} size={19} />
       <Input type='text' placeholder={placeholder} />
     </Div>
   );
