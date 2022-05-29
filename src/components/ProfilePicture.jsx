@@ -28,5 +28,5 @@ export default function ProfilePicture({url, border, size}) {
 ProfilePicture.propTypes = {
   url: propTypes.string,
   border: propTypes.string,
-  size: propTypes.number,
+  size: propTypes.string,
 };
