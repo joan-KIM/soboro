@@ -1,13 +1,14 @@
 import React from 'react';
-import {useAuth} from '../hooks/useAuth';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 
 const Div = styled.div`
     background: #FFFFFF;
-    width: 110px;
-    height: 110px;
+    width: ${(props) => props.size ? props.size : '110px'};
+    height: ${(props) => props.size ? props.size : '110px'};
     border-radius: 50%;
     overflow: hidden;
+    border: ${(props) => props.border ? props.border : 'none'};
 `;
 
 const Image = styled.img`
@@ -16,12 +17,16 @@ const Image = styled.img`
     object-fit: cover;
 `;
 
-export default function ProfilePicture() {
-  const {user} = useAuth();
-
+export default function ProfilePicture({url, border, size}) {
   return (
-    <Div>
-      <Image src={user?.photoUrl} />
+    <Div border={border} size={size}>
+      <Image src={url} />
     </Div>
   );
 }
+
+ProfilePicture.propTypes = {
+  url: propTypes.string,
+  border: propTypes.string,
+  size: propTypes.number,
+};
