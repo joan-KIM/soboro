@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SearchBar from '../components/common/SearchBar';
 import styled from 'styled-components';
 import {findUserByName} from '../firebase/firestore';
@@ -23,18 +23,28 @@ const SearchBtn = styled.button`
 `;
 
 export default function SearchFriendsPage() {
-  const [event, setEvent] = useState();
-  const [user, setUser] = useState({});
+  const [event, setEvent] = useState(null);
+  const [user, setUser] = useState(null);
   let name = '';
 
-  const onClick = async (event) => {
-    setEvent(event);
-    const result = await findUserByName(name);
-    setUser(result);
-  };
+  useEffect(() => {
+    async function search() {
+      const result = await findUserByName(name);
+      if (result) {
+        setUser(result);
+      } else {
+        setUser(null);
+      }
+    }
+    search();
+  }, [event]);
 
   const getValue = (text) => {
     name = text;
+  };
+
+  const onClick = (event) => {
+    setEvent(event);
   };
 
   return (
@@ -43,7 +53,7 @@ export default function SearchFriendsPage() {
         <SearchBar placeholder='사용자 아이디를 검색해보세요' event={event} getValue={getValue} />
         <SearchBtn type='button' onClick={onClick}>검색</SearchBtn>
       </Div>
-      <p>{user ? user.name : '해당 사용자가 없습니다.'}</p>
+      <p>{(event === null || user) ? user?.name : '해당 사용자가 없습니다.'}</p>
     </Page>
   );
 }
