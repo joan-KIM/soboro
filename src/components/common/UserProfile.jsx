@@ -32,7 +32,7 @@ const P = styled.p`
 export default function UserProfile({user, email, memory}) {
   return (
     <Info>
-      <ProfilePicture url={user?.photoUrl} border='0.8px solid #969696' size='56px' />
+      {user && <ProfilePicture url={user?.photoUrl} border='0.8px solid #969696' size='56px' />}
       <Div>
         <Name>{user?.name}</Name>
         {email && <P>{user?.email}</P>}

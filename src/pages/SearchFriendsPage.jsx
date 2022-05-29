@@ -60,7 +60,7 @@ export default function SearchFriendsPage() {
         <SearchBtn type='button' onClick={onClick}>검색</SearchBtn>
       </Search>
       <main>
-        {user ? <UserProfile user={user} email /> : <P>해당 아이디의 사용자가 없습니다.</P>}
+        {(event === null || user) ? <UserProfile user={user} email /> : <P>해당 아이디의 사용자가 없습니다.</P>}
       </main>
     </Page>
   );
