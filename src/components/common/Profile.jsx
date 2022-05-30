@@ -28,7 +28,7 @@ const P = styled.p`
   font-weight: 400;
 `;
 
-export default function UserProfile({user, email, memory}) {
+export default function Profile({user, email, memory}) {
   return (
     <Info>
       {user && <ProfilePicture url={user?.photoUrl} border='0.8px solid #969696' size='56px' />}
@@ -41,7 +41,7 @@ export default function UserProfile({user, email, memory}) {
   );
 }
 
-UserProfile.propTypes = {
+Profile.propTypes = {
   user: propTypes.object,
   email: propTypes.bool,
   memory: propTypes.bool,
