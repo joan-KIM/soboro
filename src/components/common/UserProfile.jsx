@@ -4,7 +4,6 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Info = styled.div`
-  // background: orange;
   display: flex;
   align-items: center;
   `;
@@ -36,7 +35,7 @@ export default function UserProfile({user, email, memory}) {
       <Div>
         <Name>{user?.name}</Name>
         {email && <P>{user?.email}</P>}
-        {memory && <P>어렵다 참...</P>}
+        {memory && <P>함께한 추억 n개</P>}
       </Div>
     </Info>
   );

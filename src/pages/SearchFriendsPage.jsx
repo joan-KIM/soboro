@@ -3,6 +3,7 @@ import SearchBar from '../components/common/SearchBar';
 import styled from 'styled-components';
 import {findUserByName} from '../firebase/firestore';
 import UserProfile from '../components/common/UserProfile';
+import CustomButton from '../components/common/CustomButton';
 
 const Page = styled.div`
   padding: 18px;
@@ -61,6 +62,12 @@ export default function SearchFriendsPage() {
       </Search>
       <main>
         {(event === null || user) ? <UserProfile user={user} email /> : <P>해당 아이디의 사용자가 없습니다.</P>}
+        <CustomButton
+          value='친구 요청'
+          color='#FFFFFF'
+          bgColor='#4886FF'
+          onClick={() => console.log('test')}
+        />
       </main>
     </Page>
   );
