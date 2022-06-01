@@ -31,8 +31,12 @@ const Main = styled.main`
   align-items: center;
 `;
 
+const P = styled.p`
+  text-align: center;
+`;
+
 export default function SearchFriendsPage() {
-  const {register, handleSubmit} = useForm();
+  const {register, handleSubmit, formState: {isSubmitted}} = useForm();
   const {searchFriend} = useFriends();
   const [user, setUser] = useState();
 
@@ -52,10 +56,15 @@ export default function SearchFriendsPage() {
         />
         <SearchBtn type='submit' >검색</SearchBtn>
       </Form>
-      <Main>
-        { user && <Profile user={user} email /> }
-        { user && <StateButton user={user} />}
-      </Main>
+      { isSubmitted ?
+        (user ?
+          <Main>
+            <Profile user={user} email />
+            <StateButton friend={user} />
+          </Main> :
+          <P>해당 아이디의 사용자가 없습니다.</P>) :
+      undefined
+      }
     </Page>
   );
 };
