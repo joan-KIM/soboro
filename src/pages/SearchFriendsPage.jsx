@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import SearchBar from '../components/common/SearchBar';
 import styled from 'styled-components';
-import {findUserByName} from '../firebase/firestore';
+import {useForm} from 'react-hook-form';
 import Profile from '../components/common/Profile';
+import {useFriends} from '../hooks/useFriends';
 
 const Page = styled.div`
   padding: 18px;
 `;
 
-const Search = styled.div`
+const Form = styled.form`
   display: flex;
   margin-bottom: 22px;
 `;
@@ -24,43 +25,29 @@ const SearchBtn = styled.button`
   padding-left: 10px;
 `;
 
-const P = styled.p`
-  text-align: center;
-`;
-
 export default function SearchFriendsPage() {
-  const [event, setEvent] = useState(null);
-  const [user, setUser] = useState(null);
-  let name = '';
+  const {register, handleSubmit} = useForm();
+  const {searchFriend} = useFriends();
+  const [user, setUser] = useState();
 
-  useEffect(() => {
-    async function search() {
-      const result = await findUserByName(name);
-      if (result) {
-        setUser(result);
-      } else {
-        setUser(null);
-      }
-    }
-    search();
-  }, [event]);
-
-  const getValue = (text) => {
-    name = text;
-  };
-
-  const onClick = (event) => {
-    setEvent(event);
+  const onSubmit = async (data) => {
+    const result = await searchFriend(data.search);
+    setUser(result);
   };
 
   return (
     <Page>
-      <Search>
-        <SearchBar placeholder='사용자 아이디를 검색해보세요' event={event} getValue={getValue} />
-        <SearchBtn type='button' onClick={onClick}>검색</SearchBtn>
-      </Search>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <SearchBar
+          required
+          name='search'
+          register={register}
+          placeholder='사용자 아이디를 검색해보세요'
+        />
+        <SearchBtn type='submit' >검색</SearchBtn>
+      </Form>
       <main>
-        {(event === null || user) ? <Profile user={user} email /> : <P>해당 아이디의 사용자가 없습니다.</P>}
+        { user && <Profile user={user} email /> }
       </main>
     </Page>
   );
