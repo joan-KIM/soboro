@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import Profile from '../components/common/Profile';
 import {useFriends} from '../hooks/useFriends';
+import StateButton from '../components/common/StateButton';
 
 const Page = styled.div`
   padding: 18px;
@@ -23,6 +24,11 @@ const SearchBtn = styled.button`
   color: black;
   padding: 0;
   padding-left: 10px;
+`;
+
+const Main = styled.main`
+  display: flex;
+  align-items: center;
 `;
 
 export default function SearchFriendsPage() {
@@ -46,9 +52,11 @@ export default function SearchFriendsPage() {
         />
         <SearchBtn type='submit' >검색</SearchBtn>
       </Form>
-      <main>
+      <Main>
         { user && <Profile user={user} email /> }
-      </main>
+        { user && <StateButton user={user} />}
+      </Main>
     </Page>
   );
 };
+

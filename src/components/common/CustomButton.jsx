@@ -12,7 +12,8 @@ const Button = styled.button`
   border-radius: 5px;
   outline: none;
   border: none;
-  font-weight: 
+  display: block;
+  margin-left: auto;
 `;
 
 export default function CustomButton({
