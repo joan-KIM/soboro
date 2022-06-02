@@ -139,8 +139,7 @@ export const getUsers = (uids = []) => {
 
 // 친구 요청
 export const requestFriend = (user, uid) => {
-  runTransaction(db, async (transaction) => {
-    console.log(transaction);
+  return runTransaction(db, async (transaction) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
@@ -155,7 +154,7 @@ export const requestFriend = (user, uid) => {
 
 // 요청 온 친구 승인
 export const approveFriend = (user, uid) => {
-  runTransaction(db, async (transaction) => {
+  return runTransaction(db, async (transaction) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
@@ -172,7 +171,7 @@ export const approveFriend = (user, uid) => {
 
 // 내가 한 친구 요청 취소
 export const cancelRequestFriend = (user, uid) => {
-  runTransaction(db, async (transaction) => {
+  return runTransaction(db, async (transaction) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
@@ -187,7 +186,7 @@ export const cancelRequestFriend = (user, uid) => {
 
 // 요청 온 친구 거절
 export const rejectFriend = (user, uid) => {
-  runTransaction(db, async (transaction) => {
+  return runTransaction(db, async (transaction) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 
@@ -202,7 +201,7 @@ export const rejectFriend = (user, uid) => {
 
 // 친구 삭제
 export const removeFriend = (user, uid) => {
-  runTransaction(db, async (transaction) => {
+  return runTransaction(db, async (transaction) => {
     const userRef = getUserRef(user.uid);
     const friendRef = getUserRef(uid);
 

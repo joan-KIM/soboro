@@ -1,5 +1,5 @@
-import {useCallback, useMemo} from 'react';
-import {useQuery} from 'react-query';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useQuery, useQueryClient} from 'react-query';
 import {
   getEvents,
   getUsers,
@@ -28,6 +28,7 @@ export const FRIEND_ACTION = {
 
 export const useFriends = () => {
   const {user} = useUser();
+  const queryClient = useQueryClient();
   const {data: timeline} = useQuery('timeline', getEvents, {
     initialData: [],
     placeholderData: [],
@@ -36,6 +37,9 @@ export const useFriends = () => {
     initialData: [],
     placeholderData: [],
   });
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const {data: searchedFriend} = useQuery(['friend/search', searchKeyword], () => findUserByName(searchKeyword));
+
   const friends = useMemo(() => data
       .filter(({isDeleted}) => !isDeleted)
       .map((friend) => ({
@@ -45,7 +49,7 @@ export const useFriends = () => {
   [timeline, data]);
 
   const getStatus = useCallback((friend) => {
-    if (!user) {
+    if (!user || !friend) {
       return FRIEND_STATUS.NONE;
     }
     if (user.friend.list.includes(friend.uid)) {
@@ -60,13 +64,14 @@ export const useFriends = () => {
     return FRIEND_STATUS.NONE;
   }, [user]);
 
-  const searchFriend = useCallback(async (keyword) => {
-    const friend = await findUserByName(keyword);
-    if (friend) {
-      return {...friend, status: getStatus(friend)};
-    }
-    return null;
-  }, [getStatus]);
+  useEffect(() => {
+    queryClient.invalidateQueries(['friend/search', searchKeyword]);
+  }, [searchKeyword]);
+
+  const searchFriend = useCallback((keyword) => {
+    setSearchKeyword(keyword);
+  }, []);
+  const searchResult = useMemo(() => ({...searchedFriend, status: getStatus(searchedFriend)}), [searchedFriend]);
 
   const isFriend = useCallback((uid) => user && user.friend.list.includes(uid), [user]);
 
@@ -77,26 +82,38 @@ export const useFriends = () => {
   const remove = useCallback((uid) => removeFriend(user, uid), [user]);
 
   const dispatchFriendAction = useCallback((uid, action) => {
+    let result = null;
     switch (action) {
       case FRIEND_ACTION.REQUEST:
-        return request(uid);
+        result = request(uid);
+        break;
       case FRIEND_ACTION.APPROVE:
-        return approve(uid);
+        result = approve(uid);
+        break;
       case FRIEND_ACTION.CANCEL:
-        return cancel(uid);
+        result = cancel(uid);
+        break;
       case FRIEND_ACTION.REJECT:
-        return reject(uid);
+        result = reject(uid);
+        break;
       case FRIEND_ACTION.REMOVE:
-        return remove(uid);
+        result = remove(uid);
+        break;
       default:
         return null;
     }
-  }, [request, approve, cancel, reject, remove]);
+    return result.then(() => {
+      queryClient.invalidateQueries(['friend/search', searchKeyword]);
+      queryClient.invalidateQueries(['user', user?.uid]);
+    });
+  }, [request, approve, cancel, reject, remove, searchKeyword]);
+
 
   return {
     friends,
     isFriend,
     searchFriend,
     dispatchFriendAction,
+    searchResult,
   };
 };
