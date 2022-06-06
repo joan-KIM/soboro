@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import SearchBar from '../components/common/SearchBar';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
@@ -37,12 +37,10 @@ const P = styled.p`
 
 export default function SearchFriendsPage() {
   const {register, handleSubmit, formState: {isSubmitted}} = useForm();
-  const {searchFriend} = useFriends();
-  const [user, setUser] = useState();
+  const {searchFriend, searchResult} = useFriends();
 
   const onSubmit = async (data) => {
-    const result = await searchFriend(data.search);
-    setUser(result);
+    await searchFriend(data.search);
   };
 
   return (
@@ -57,10 +55,10 @@ export default function SearchFriendsPage() {
         <SearchBtn type='submit' >검색</SearchBtn>
       </Form>
       { isSubmitted ?
-        (user ?
+        (searchResult ?
           <Main>
-            <Profile user={user} email />
-            <StateButton friend={user} />
+            <Profile user={searchResult} email />
+            <StateButton friend={searchResult} />
           </Main> :
           <P>해당 아이디의 사용자가 없습니다.</P>) :
       undefined
