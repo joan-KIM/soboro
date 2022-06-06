@@ -37,7 +37,7 @@ const P = styled.p`
 
 export default function SearchFriendsPage() {
   const {register, handleSubmit, formState: {isSubmitted}} = useForm();
-  const {searchFriend, searchResult} = useFriends();
+  const {searchFriend, searchResult, dispatchFriendAction} = useFriends();
 
   const onSubmit = async (data) => {
     await searchFriend(data.search);
@@ -54,14 +54,13 @@ export default function SearchFriendsPage() {
         />
         <SearchBtn type='submit' >검색</SearchBtn>
       </Form>
-      { isSubmitted ?
-        (searchResult ?
+      { isSubmitted &&
+        (searchResult.uid ?
           <Main>
             <Profile user={searchResult} email />
-            <StateButton friend={searchResult} />
+            <StateButton friend={searchResult} dispatchFriendAction={dispatchFriendAction} />
           </Main> :
-          <P>해당 아이디의 사용자가 없습니다.</P>) :
-      undefined
+          <P>해당 아이디의 사용자가 없습니다.</P>)
       }
     </Page>
   );

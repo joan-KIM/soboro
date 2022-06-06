@@ -1,11 +1,10 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import CustomButton from './CustomButton';
-import {useFriends, FRIEND_ACTION} from '../../hooks/useFriends';
+import {FRIEND_ACTION} from '../../hooks/useFriends';
 import {useUser} from '../../hooks/useUser';
 
-export default function StateButton({friend}) {
-  const {dispatchFriendAction} = useFriends();
+export default function StateButton({friend, dispatchFriendAction}) {
   const {user} = useUser();
   const status = friend?.status;
   const uid = friend?.uid;
@@ -44,4 +43,5 @@ export default function StateButton({friend}) {
 
 StateButton.propTypes = {
   friend: propTypes.object,
+  dispatchFriendAction: propTypes.func,
 };
