@@ -33,7 +33,7 @@ export default function SearchBar({placeholder, name, register, required}) {
       <Input
         type='text'
         placeholder={placeholder}
-        {...register(name, required)}
+        {...register(name, {required})}
       />
     </Div>
   );

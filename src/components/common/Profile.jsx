@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Info = styled.div`
   display: flex;
   align-items: center;
-  `;
+`;
 
 const Div = styled.div`
   display: inline-block;
