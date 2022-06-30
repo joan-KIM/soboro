@@ -7,7 +7,10 @@ const Wrapper = styled.div`
   border: 1px solid #F0F0F0;
   border-radius: 8px;
   padding: 9px 8px 10px 12px;
-  margin-bottom: 8px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 `;
 
 const Title = styled.h2`
@@ -62,7 +65,7 @@ export default function Event({title, members, isPublic}) {
       <Detail>
         <Profiles>
           {members.slice(0, 6).map(({uid, photoUrl}) => <Profile key={uid} src={photoUrl} />)}
-          {members.length > 1 && <More>{members.length - 1}</More>}
+          {members.length > 6 && <More>{members.length - 6}</More>}
         </Profiles>
         <Public>
           {isPublic ? '전체 공개' : '멤버 공개'}

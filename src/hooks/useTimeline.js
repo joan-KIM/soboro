@@ -38,5 +38,17 @@ export const useTimeline = (user) => {
       [timeline, keyword],
   );
 
-  return {timeline, timelineWithMe, timelineWithSearch, setKeyword};
+  const groupByDate = (timeline) => timeline.reduce((list, event) => {
+    const lastList = list.at(-1);
+    if (!lastList) {
+      return [[event]];
+    }
+    const [{date}] = lastList;
+    if (date === event.date) {
+      return [...list.slice(0, -1), [...lastList, event]];
+    }
+    return [...list, [event]];
+  }, []);
+
+  return {timeline, timelineWithMe, timelineWithSearch, setKeyword, groupByDate};
 };

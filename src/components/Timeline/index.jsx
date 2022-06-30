@@ -3,7 +3,7 @@ import Info from '../Info';
 import styled from 'styled-components';
 import {useTimeline} from '../../hooks/useTimeline';
 import {useUser} from '../../hooks/useUser';
-import Event from './Event';
+import EventGroup from './EventGroup';
 
 const Wrapper = styled.div`
   margin: 12px 19px;
@@ -11,18 +11,13 @@ const Wrapper = styled.div`
 
 export default function Timeline() {
   const {user} = useUser();
-  const {timeline} = useTimeline(user);
+  const {timeline, groupByDate} = useTimeline(user);
   console.log(timeline);
   return (
     <Wrapper>
       {!user?.friend?.list?.length && <Info text="새로운 친구를 추가해보세요" />}
       {!timeline.length && <Info text="친구와 함께한 추억을 등록해보세요" />}
-      {timeline.map(({id, title, members, isPublic}) => <Event
-        key={id}
-        title={title}
-        members={members}
-        isPublic={isPublic}
-      />)}
+      {groupByDate(timeline).map((events) => <EventGroup key={events[0].date} events={events} />)}
     </Wrapper>
   );
 }
