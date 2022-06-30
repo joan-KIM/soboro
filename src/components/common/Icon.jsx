@@ -17,6 +17,7 @@ import {ReactComponent as AcitveHome} from '../../assets/home_active.svg';
 import {ReactComponent as AcitveUpload} from '../../assets/upload_active.svg';
 import {ReactComponent as Camera} from '../../assets/camera.svg';
 import {ReactComponent as Down} from '../../assets/down.svg';
+import {ReactComponent as Info} from '../../assets/info.svg';
 
 export const ICON_TYPE = {
   CLEAR: 'clear',
@@ -36,6 +37,7 @@ export const ICON_TYPE = {
   ACTIVE_HOME: 'active-home',
   ACTIVE_UPLOAD: 'active-upload',
   CAMERA: 'camera',
+  INFO: 'info',
 };
 
 const Icon = ({type, size = 16, color = 'black', onClick}) => {
@@ -89,6 +91,9 @@ const Icon = ({type, size = 16, color = 'black', onClick}) => {
   }
   if (type === ICON_TYPE.DOWN) {
     return <Down width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.INFO) {
+    return <Info width={size} height={size} fill={color} onClick={onClick} />;
   }
 
   return null;

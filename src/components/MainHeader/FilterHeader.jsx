@@ -29,7 +29,8 @@ const Button = styled.button`
   line-height: 12px;
   font-weight: 600;
   margin-left: 6px;
-  align-self: center;
+  margin-bottom: 2px;
+  align-self: flex-end;
 `;
 
 export default function FilterHeader() {
