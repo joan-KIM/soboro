@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 export default function Timeline() {
   const {user} = useUser();
   const {timeline, groupByDate} = useTimeline(user);
-  console.log(timeline);
+
   return (
     <Wrapper>
       {!user?.friend?.list?.length && <Info text="새로운 친구를 추가해보세요" />}
