@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
   const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('refresh_token'));
   const [authInfo, setAuthInfo] = useState();
   const [error, setError] = useState();
-  const {data} = useQuery(['user', authInfo?.uid], () => getUser(authInfo?.uid));
+  const {data} = useQuery(`user${authInfo?.uid}`, () => getUser(authInfo?.uid));
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(Auth.auth, (auth) => {

@@ -50,10 +50,7 @@ function Auth() {
       <button onClick={() => {
         signup({email, password, name, birthday});
       }}>Sign Up</button>
-      <button onClick={async () => {
-        const res = await login(email, password);
-        console.log(res);
-      }}>Login</button>
+      <button onClick={() => login(email, password)}>Login</button>
       <button onClick={() => logout()}>Logout</button>
       <button onClick={() => resetPassword(email)}>Reset Password</button>
     </div>
