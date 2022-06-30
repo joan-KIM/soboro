@@ -10,7 +10,6 @@ import {
   rejectFriend,
   removeFriend,
 } from '../firebase/firestore';
-import {useUser} from './useUser';
 
 export const FRIEND_STATUS = {
   FRIEND: 'friend',
@@ -26,8 +25,7 @@ export const FRIEND_ACTION = {
   REMOVE: 'remove',
 };
 
-export const useFriends = () => {
-  const {user} = useUser();
+export const useFriends = (user) => {
   const queryClient = useQueryClient();
   const {data: timeline} = useQuery('timeline', getEvents, {
     initialData: [],
@@ -37,6 +35,7 @@ export const useFriends = () => {
     initialData: [],
     placeholderData: [],
   });
+
   const [searchKeyword, setSearchKeyword] = useState('');
   const {data: searchedFriend} = useQuery(['friend/search', searchKeyword], () => findUserByName(searchKeyword));
 
@@ -75,6 +74,13 @@ export const useFriends = () => {
 
   const isFriend = useCallback((uid) => user && user.friend.list.includes(uid), [user]);
 
+  const getFriend = (id) => {
+    if (!friends.length) {
+      return null;
+    }
+    return friends.find(({uid}) => id === uid);
+  };
+
   const request = useCallback((uid) => requestFriend(user, uid), [user]);
   const approve = useCallback((uid) => approveFriend(user, uid), [user]);
   const cancel = useCallback((uid) => cancelRequestFriend(user, uid), [user]);
@@ -112,6 +118,7 @@ export const useFriends = () => {
   return {
     friends,
     isFriend,
+    getFriend,
     searchFriend,
     dispatchFriendAction,
     searchResult,

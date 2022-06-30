@@ -41,7 +41,7 @@ export const getEvent = (id) => {
 export const getEvents = async () => {
   const eventsSnapshot = await getDocs(eventsRef);
   const events = [];
-  eventsSnapshot.forEach((doc) => events.push(doc.data()));
+  eventsSnapshot.forEach((doc) => events.push({id: doc.id, ...doc.data()}));
   return events;
 };
 
