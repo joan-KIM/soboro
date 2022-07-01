@@ -16,6 +16,8 @@ import {ReactComponent as Forward} from '../../assets/forward.svg';
 import {ReactComponent as AcitveHome} from '../../assets/home_active.svg';
 import {ReactComponent as AcitveUpload} from '../../assets/upload_active.svg';
 import {ReactComponent as Camera} from '../../assets/camera.svg';
+import {ReactComponent as Picture} from '../../assets/picture.svg';
+import {ReactComponent as Calendar} from '../../assets/calendar.svg';
 
 export const ICON_TYPE = {
   CLEAR: 'clear',
@@ -34,6 +36,8 @@ export const ICON_TYPE = {
   ACTIVE_HOME: 'active-home',
   ACTIVE_UPLOAD: 'active-upload',
   CAMERA: 'camera',
+  CALENDAR: 'calendar',
+  PICTURE: 'picture',
 };
 
 const Icon = ({type, size = 16, color = 'black', onClick}) => {
@@ -84,6 +88,12 @@ const Icon = ({type, size = 16, color = 'black', onClick}) => {
   }
   if (type === ICON_TYPE.CAMERA) {
     return <Camera width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.PICTURE) {
+    return <Picture width={size} height={size} fill={color} onClick={onClick} />;
+  }
+  if (type === ICON_TYPE.CALENDAR) {
+    return <Calendar width={size} height={size} fill={color} onClick={onClick} />;
   }
 
   return null;
