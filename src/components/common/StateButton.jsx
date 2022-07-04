@@ -31,12 +31,16 @@ export default function StateButton({friend, dispatchFriendAction}) {
   if (status === 'requesting') {
     return <CustomButton
       value='요청됨'
-      bgColor='F0F0F0'
+      bgColor='#F0F0F0'
       onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.CANCEL)}
     />;
   }
   if (status === 'friend') {
-    return <CustomButton value='친구' />;
+    return <CustomButton
+      value='삭제'
+      bgColor='#F0F0F0'
+      onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.REMOVE)}
+    />;
   }
   return null;
 }

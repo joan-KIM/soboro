@@ -3,11 +3,12 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  width: ${(props) => props.width ? props.width : 74}px;
-  height: ${(props) => props.height ? props.height : 22}px;
-  color: ${(props) => props.color ? props.color : 'black'};
-  background: ${(props) => props.bgColor ? props.bgColor : '#FFD12D'};
+  width: 74px;
+  height: 22px;
+  color: ${(props) => props.color};
+  background: ${(props) => props.bgColor};
   
+  font-size: 12px;
   font-weight: 600;
   border-radius: 5px;
   outline: none;
@@ -19,8 +20,6 @@ const Button = styled.button`
 export default function CustomButton({
   color,
   value,
-  width,
-  height,
   bgColor,
   onClick,
 }) {
@@ -30,8 +29,6 @@ export default function CustomButton({
       onClick={onClick}
       color={color}
       bgColor={bgColor}
-      width={width}
-      height={height}
     >
       {value}
     </Button>
@@ -42,7 +39,5 @@ CustomButton.propTypes = {
   value: propTypes.string.isRequired,
   color: propTypes.string,
   bgColor: propTypes.string,
-  width: propTypes.number,
-  height: propTypes.number,
   onClick: propTypes.func.isRequired,
 };

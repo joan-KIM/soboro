@@ -4,11 +4,10 @@ import propTypes from 'prop-types';
 
 const Div = styled.div`
     background: #FFFFFF;
-    width: ${(props) => props.size ? props.size : '110px'};
-    height: ${(props) => props.size ? props.size : '110px'};
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
-    border: ${(props) => props.border ? props.border : 'none'};
 `;
 
 const Image = styled.img`

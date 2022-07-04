@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon, {ICON_TYPE} from './Icon';
+import Icon, {ICON_TYPE} from '../common/Icon';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 
@@ -26,22 +26,20 @@ const Input = styled.input`
   }
 `;
 
-export default function SearchBar({placeholder, name, register, required}) {
+export default function SearchBar({placeholder, register}) {
   return (
     <Div>
       <Icon type={ICON_TYPE.SEARCH} size={19} />
       <Input
         type='text'
         placeholder={placeholder}
-        {...register(name, {required})}
+        {...register('search', {required: true})}
       />
     </Div>
   );
 }
 
 SearchBar.propTypes = {
-  name: propTypes.string.isRequired,
-  required: propTypes.bool,
   register: propTypes.func.isRequired,
   placeholder: propTypes.string.isRequired,
 };
