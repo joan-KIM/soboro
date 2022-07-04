@@ -3,22 +3,22 @@ import styled from 'styled-components';
 import propTypes from 'prop-types';
 
 const Div = styled.div`
-    background: #FFFFFF;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    overflow: hidden;
+  background: #FFFFFF;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
-export default function ProfilePicture({url, border, size}) {
+export default function ProfilePicture({url}) {
   return (
-    <Div border={border} size={size}>
+    <Div>
       <Image src={url} />
     </Div>
   );
@@ -26,6 +26,4 @@ export default function ProfilePicture({url, border, size}) {
 
 ProfilePicture.propTypes = {
   url: propTypes.string,
-  border: propTypes.string,
-  size: propTypes.string,
 };
