@@ -1,51 +1,39 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import CustomButton from './CustomButton';
+import BadgeButton from './BadgeButton';
 import {FRIEND_ACTION} from '../../hooks/useFriends';
-import {useUser} from '../../hooks/useUser';
 
-export default function StateButton({friend, dispatchFriendAction}) {
-  const {user} = useUser();
-  const status = friend?.status;
-  const uid = friend?.uid;
+const STATUS_PROPS = {
+  none: {
+    value: '친구 요청',
+    color: '#FFFFFF',
+    bgColor: '#4886FF',
+    action: FRIEND_ACTION.REQUEST,
+  },
+  requested: {
+    value: '요청 수락',
+    color: '#FFFFFF',
+    bgColor: '#FF48CC',
+    action: FRIEND_ACTION.APPROVE,
+  },
+  requesting: {
+    value: '요청됨',
+    bgColor: '#F0F0F0',
+    action: FRIEND_ACTION.CANCEL,
+  },
+  friend: {
+    value: '친구',
+    bgColor: '#FFD12D',
+  },
+};
 
-  if (user.uid === uid) {
-    return null;
-  }
-  if (status === 'none') {
-    return <CustomButton
-      value='친구 요청'
-      color='#FFFFFF'
-      bgColor='#4886FF'
-      onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.REQUEST)}
-    />;
-  }
-  if (status === 'requested') {
-    return <CustomButton
-      value='요청 수락'
-      color='#FFFFFF'
-      bgColor='#FF48CC'
-      onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.APPROVE)}
-    />;
-  }
-  if (status === 'requesting') {
-    return <CustomButton
-      value='요청됨'
-      bgColor='#F0F0F0'
-      onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.CANCEL)}
-    />;
-  }
-  if (status === 'friend') {
-    return <CustomButton
-      value='삭제'
-      bgColor='#F0F0F0'
-      onClick={() => dispatchFriendAction(uid, FRIEND_ACTION.REMOVE)}
-    />;
-  }
-  return null;
+export default function StateButton({status, onClick}) {
+  const getBadgeProps = (status) => STATUS_PROPS[status];
+  const _props = getBadgeProps(status);
+  return <BadgeButton {..._props} onClick={() => onClick(_props.action)} />;
 }
 
 StateButton.propTypes = {
-  friend: propTypes.object,
-  dispatchFriendAction: propTypes.func,
+  status: propTypes.string,
+  onClick: propTypes.func,
 };

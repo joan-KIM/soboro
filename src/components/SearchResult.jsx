@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 import StateButton from '../components/common/StateButton';
+import {useUser} from '../hooks/useUser';
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,19 +41,13 @@ const Image = styled.img`
   border: 0.2px solid #969696;
 `;
 
-const Label = styled.div`
-  width: 74px;
-  height: 22px;
-  background: #FFD12D;
-  border-radius: 5px;
-  margin-left: auto;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 22px;
-`;
-
 export default function SearchResult({result, dispatchFriendAction}) {
+  const {user} = useUser();
+
+  const onClick = (action) => {
+    dispatchFriendAction(result.uid, action);
+  };
+
   return (
     <Wrapper>
       <Profile>
@@ -62,9 +57,7 @@ export default function SearchResult({result, dispatchFriendAction}) {
           <Email>{result?.email}</Email>
         </Div>
       </Profile>
-      {result.status === 'friend' ? <Label>친구</Label> :
-      <StateButton friend={result} dispatchFriendAction={dispatchFriendAction} />
-      }
+      { user.uid !== result.uid && <StateButton status={result.status} onClick={onClick} /> }
     </Wrapper>
   );
 };

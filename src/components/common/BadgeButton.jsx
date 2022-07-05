@@ -17,7 +17,7 @@ const Button = styled.button`
   margin-left: auto;
 `;
 
-export default function CustomButton({
+export default function BadgeButton({
   color,
   value,
   bgColor,
@@ -35,9 +35,9 @@ export default function CustomButton({
   );
 }
 
-CustomButton.propTypes = {
+BadgeButton.propTypes = {
   value: propTypes.string.isRequired,
   color: propTypes.string,
   bgColor: propTypes.string,
-  onClick: propTypes.func.isRequired,
+  onClick: propTypes.func,
 };
