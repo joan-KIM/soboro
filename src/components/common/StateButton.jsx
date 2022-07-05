@@ -1,27 +1,27 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import BadgeButton from './BadgeButton';
-import {FRIEND_ACTION} from '../../hooks/useFriends';
+import {FRIEND_ACTION, FRIEND_STATUS} from '../../hooks/useFriends';
 
 const STATUS_PROPS = {
-  none: {
+  [FRIEND_STATUS.NONE]: {
     value: '친구 요청',
     color: '#FFFFFF',
     bgColor: '#4886FF',
     action: FRIEND_ACTION.REQUEST,
   },
-  requested: {
+  [FRIEND_STATUS.REQUESTED]: {
     value: '요청 수락',
     color: '#FFFFFF',
     bgColor: '#FF48CC',
     action: FRIEND_ACTION.APPROVE,
   },
-  requesting: {
+  [FRIEND_STATUS.REQUESTING]: {
     value: '요청됨',
     bgColor: '#F0F0F0',
     action: FRIEND_ACTION.CANCEL,
   },
-  friend: {
+  [FRIEND_STATUS.FRIEND]: {
     value: '친구',
     bgColor: '#FFD12D',
   },
