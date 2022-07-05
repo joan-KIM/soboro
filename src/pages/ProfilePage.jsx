@@ -131,7 +131,7 @@ export default function ProfilePage() {
 
       <Main>
         <View>
-          <ProfilePicture />
+          <ProfilePicture url={user?.photoUrl} />
           <Id>{user?.name}</Id>
           <Email>{user?.email}</Email>
           <Wrapper>
