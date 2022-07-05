@@ -41,6 +41,9 @@ const Image = styled.img`
   border: 0.2px solid #969696;
 `;
 
+const P = styled.p`
+  text-align: center;
+`;
 export default function SearchResult({result, dispatchFriendAction}) {
   const {user} = useUser();
 
@@ -49,16 +52,21 @@ export default function SearchResult({result, dispatchFriendAction}) {
   };
 
   return (
-    <Wrapper>
-      <Profile>
-        <Image src={result?.photoUrl} />
-        <Div>
-          <Name>{result?.name}</Name>
-          <Email>{result?.email}</Email>
-        </Div>
-      </Profile>
-      { user.uid !== result.uid && <StateButton status={result.status} onClick={onClick} /> }
-    </Wrapper>
+    <div>
+      { result.uid ?
+      <Wrapper>
+        <Profile>
+          <Image src={result?.photoUrl} />
+          <Div>
+            <Name>{result?.name}</Name>
+            <Email>{result?.email}</Email>
+          </Div>
+        </Profile>
+        { user.uid !== result.uid && <StateButton status={result.status} onClick={onClick} /> }
+      </Wrapper> :
+      <P>해당 아이디의 사용자가 없습니다.</P>
+      }
+    </div>
   );
 };
 
